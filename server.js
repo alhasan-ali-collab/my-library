@@ -65,11 +65,20 @@ app.use(
 
 // قراءة JSON القادم من الطلبات
 app.use(express.json());
-
+app.use(
+    express.static(
+        __dirname
+    )
+);
 // الصفحة الرئيسية
 app.get("/", (req, res) => {
 
-    res.send("Home Page");
+    res.sendFile(
+        path.join(
+            __dirname,
+            "index.html"
+        )
+    );
 
 });
 
@@ -304,10 +313,17 @@ app.get("/pdf/:name", (req, res) => {
 
 });
 // تشغيل الخادم
-app.listen(3000, () => {
+const PORT =
+    process.env.PORT ||
+    3000;
 
-    console.log(
-        "Server running on port 3000"
-    );
+app.listen(
+    PORT,
+    () => {
 
-});
+        console.log(
+            `Server running on port ${PORT}`
+        );
+
+    }
+);
