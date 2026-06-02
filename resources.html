@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+محتويات المادة
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<a
+ id="backBtn"
+ class="back-btn">
+
+```
+⬅ العودة للمواد
+```
+
+</a>
+
+<header class="hero">
+
+```
+<div class="breadcrumb">
+
+    <a href="index.html">
+        🏠 الرئيسية
+    </a>
+
+    <span> ></span>
+
+    <span id="path"></span>
+
+</div>
+
+<h1 id="pageTitle">
+    محتويات المادة
+</h1>
+
+<p>
+    اختر القسم المطلوب
+</p>
+```
+
+</header>
+
+<div
+    class="books"
+    id="resourcesContainer">
+
+</div>
+
+<script>
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const term =
+    params.get("term");
+
+const grade =
+    params.get("grade");
+
+const subject =
+    params.get("subject");
+
+document.getElementById(
+    "pageTitle"
+).innerHTML =
+    subject;
+
+document.getElementById(
+    "path"
+).innerHTML =
+    `${term} > ${grade} > ${subject}`;
+
+document.getElementById(
+    "backBtn"
+).href =
+    `subjects.html?term=${term}&grade=${grade}`;
+
+const resources = [
+
+{
+name:"كتاب الطالب",
+icon:"📕",
+desc:"الكتاب الدراسي الرسمي"
+},
+
+{
+name:"حل الكتاب",
+icon:"📗",
+desc:"حلول جميع التمارين"
+},
+
+{
+name:"شرح الدروس",
+icon:"📘",
+desc:"شروحات الوحدات والدروس"
+},
+
+{
+name:"الاختبارات",
+icon:"📝",
+desc:"اختبارات قصيرة ونهائية"
+},
+
+{
+name:"الأنشطة",
+icon:"🎯",
+desc:"أنشطة وتمارين إضافية"
+},
+
+{
+name:"دليل المعلم",
+icon:"👨‍🏫",
+desc:"أدلة وإرشادات المعلمين"
+},
+
+{
+name:"التوزيع",
+icon:"📅",
+desc:"الخطة والتوزيع الدراسي"
+}
+
+];
+
+const container =
+    document.getElementById(
+        "resourcesContainer"
+    );
+
+resources.forEach(
+    resource => {
+
+        container.innerHTML += `
+
+        <a
+            class="card"
+            href="units.html?term=${term}&grade=${grade}&subject=${subject}&resource=${resource.name}">
+
+            <div style="
+                font-size:80px;
+                text-align:center;
+                padding-top:25px;
+            ">
+
+                ${resource.icon}
+
+            </div>
+
+            <h2>
+
+                ${resource.name}
+
+            </h2>
+
+            <p>
+
+                ${resource.desc}
+
+            </p>
+
+        </a>
+
+        `;
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

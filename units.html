@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+الوحدات الدراسية
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<a
+ id="backBtn"
+ class="back-btn">
+
+```
+⬅ العودة للأقسام
+```
+
+</a>
+
+<header class="hero">
+
+```
+<div class="breadcrumb">
+
+    <a href="index.html">
+        🏠 الرئيسية
+    </a>
+
+    <span> ></span>
+
+    <span id="path"></span>
+
+</div>
+
+<h1 id="pageTitle">
+    الوحدات الدراسية
+</h1>
+
+<p>
+    اختر الوحدة
+</p>
+```
+
+</header>
+
+<h2 id="unitsCount"></h2>
+
+<input
+ id="searchInput"
+ type="text"
+ placeholder="🔍 ابحث عن وحدة..."
+ class="search-box">
+
+<div
+    class="books"
+    id="unitsContainer">
+
+</div>
+
+<script>
+
+async function loadUnits() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const term =
+        params.get("term");
+
+    const grade =
+        params.get("grade");
+
+    const subject =
+        params.get("subject");
+
+    const resource =
+        params.get("resource");
+
+    document.getElementById(
+        "pageTitle"
+    ).innerHTML =
+        `${subject} - ${resource}`;
+
+    document.getElementById(
+        "path"
+    ).innerHTML =
+        `${term} > ${grade} > ${subject} > ${resource}`;
+
+    document.getElementById(
+        "backBtn"
+    ).href =
+        `resources.html?term=${term}&grade=${grade}&subject=${subject}`;
+
+    const response =
+        await fetch(
+            "http://localhost:3000/books"
+        );
+
+    const books =
+        await response.json();
+
+    const searchValue =
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase();
+
+    const units =
+        books.filter(
+            book =>
+
+            book.term === term &&
+
+            book.grade === grade &&
+
+            book.subject === subject &&
+
+            book.resource === resource &&
+
+            book.title
+                .toLowerCase()
+                .includes(
+                    searchValue
+                )
+        );
+
+    document.getElementById(
+        "unitsCount"
+    ).innerHTML =
+        `📚 عدد الوحدات: ${units.length}`;
+
+    const container =
+        document.getElementById(
+            "unitsContainer"
+        );
+
+    container.innerHTML = "";
+
+    if (
+        units.length === 0
+    ) {
+
+        container.innerHTML =
+
+        `
+        <div style="
+            text-align:center;
+            padding:40px;
+            font-size:22px;
+        ">
+            لا توجد وحدات حالياً
+        </div>
+        `;
+
+        return;
+
+    }
+
+    units.forEach(
+        (book) => {
+
+            container.innerHTML += `
+
+            <a
+                class="card"
+                href="book.html?id=${books.indexOf(book)}">
+
+                <img
+                    src="http://localhost:3000${book.image}"
+                    alt="${book.title}"
+                    style="
+                        width:100%;
+                        height:220px;
+                        object-fit:cover;
+                    ">
+
+                <h3>
+                    ${book.title}
+                </h3>
+
+                <p>
+                    ${book.description}
+                </p>
+
+            </a>
+
+            `;
+
+        }
+    );
+
+}
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        loadUnits
+    );
+
+loadUnits();
+
+</script>
+
+</body>
+
+</html>

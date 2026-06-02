@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+الصفوف الدراسية
+</title>
+
+<a
+    class="back-btn"
+    href="index.html">
+
+    ⬅ العودة للرئيسية
+
+</a>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header class="hero">
+
+<h1 id="termTitle">
+الفصل الدراسي
+</h1>
+
+<p>
+اختر الصف الدراسي
+</p>
+
+</header>
+
+<div
+class="books"
+id="gradesContainer">
+
+</div>
+
+<script>
+
+const params =
+new URLSearchParams(
+window.location.search
+);
+
+const term =
+params.get("term");
+
+document.getElementById(
+"termTitle"
+).innerHTML = term;
+
+const grades = [
+
+"الصف الأول",
+"الصف الثاني",
+"الصف الثالث",
+"الصف الرابع",
+"الصف الخامس",
+"الصف السادس",
+"الصف السابع",
+"الصف الثامن",
+"الصف التاسع"
+
+];
+
+const container =
+document.getElementById(
+"gradesContainer"
+);
+
+grades.forEach(
+grade => {
+
+container.innerHTML += `
+
+<a
+class="card"
+href="subjects.html?term=${term}&grade=${grade}">
+
+<h2>
+🏫 ${grade}
+</h2>
+
+</a>
+
+`;
+
+}
+);
+
+</script>
+
+</body>
+
+</html>

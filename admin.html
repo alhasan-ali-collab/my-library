@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <button
+onclick="logout()">
+
+🚪 تسجيل الخروج
+
+</button>
+
+<title>
+    لوحة إدارة المنصة التعليمية
+</title>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet">
+
+<link
+    rel="stylesheet"
+    href="style.css">
+```
+
+</head>
+
+<body>
+
+```
+<div class="admin-container">
+
+    <h1 class="admin-title">
+        📚 لوحة إدارة المنصة التعليمية
+    </h1>
+
+    <p class="admin-subtitle">
+        إضافة الوحدات والدروس التعليمية
+    </p>
+
+    <h2 id="booksCounter"></h2>
+
+    <div id="message"></div>
+
+    <form id="bookForm">
+
+        <!-- الفصل -->
+
+        <select id="term" required>
+
+            <option value="">
+                اختر الفصل
+            </option>
+
+            <option>
+                الفصل الأول
+            </option>
+
+            <option>
+                الفصل الثاني
+            </option>
+
+        </select>
+
+        <!-- الصف -->
+
+        <select id="grade" required>
+
+            <option value="">
+                اختر الصف
+            </option>
+
+            <option>الصف الأول</option>
+            <option>الصف الثاني</option>
+            <option>الصف الثالث</option>
+            <option>الصف الرابع</option>
+            <option>الصف الخامس</option>
+            <option>الصف السادس</option>
+            <option>الصف السابع</option>
+            <option>الصف الثامن</option>
+            <option>الصف التاسع</option>
+
+        </select>
+
+        <!-- المادة -->
+
+        <select id="subject" required>
+
+            <option value="">
+                اختر المادة
+            </option>
+
+            <option>القرآن الكريم</option>
+            <option>التربية الإسلامية</option>
+            <option>اللغة العربية</option>
+            <option>الرياضيات</option>
+            <option>العلوم</option>
+            <option>الاجتماعيات</option>
+            <option>اللغة الإنجليزية</option>
+            <option>التربية الفنية</option>
+            <option>المهارات الحياتية</option>
+
+        </select>
+
+        <!-- القسم -->
+
+        <select id="resource" required>
+
+            <option value="">
+                اختر القسم
+            </option>
+
+            <option>
+                كتاب الطالب
+            </option>
+
+            <option>
+                حل الكتاب
+            </option>
+
+            <option>
+                شرح الدروس
+            </option>
+
+            <option>
+                الاختبارات
+            </option>
+
+            <option>
+                الأنشطة
+            </option>
+
+            <option>
+                دليل المعلم
+            </option>
+
+            <option>
+                التوزيع
+            </option>
+
+        </select>
+
+        <!-- اسم الوحدة -->
+
+        <input
+            id="title"
+            type="text"
+            placeholder="📖 اسم الوحدة أو الفصل"
+            required>
+
+        <!-- وصف الوحدة -->
+
+        <textarea
+            id="description"
+            placeholder="📝 وصف الوحدة"
+            required>
+        </textarea>
+
+        <!-- صورة -->
+
+        <label>
+            🖼 صورة الوحدة
+        </label>
+
+        <input
+            id="image"
+            type="file"
+            accept="image/*">
+
+        <!-- PDF -->
+
+        <label>
+            📄 ملف PDF
+        </label>
+
+        <input
+            id="file"
+            type="file"
+            accept=".pdf">
+
+        <button type="submit">
+
+            ➕ إضافة الوحدة
+
+        </button>
+
+    </form>
+
+    <h2>
+        📚 الوحدات الموجودة
+    </h2>
+
+    <div id="booksList"></div>
+
+</div>
+
+<script src="admin.js"></script>
+```
+
+</body>
+
+</html>

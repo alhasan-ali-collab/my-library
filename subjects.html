@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+المواد الدراسية
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<a
+ id="backBtn"
+ class="back-btn">
+
+```
+⬅ العودة للصفوف
+```
+
+</a>
+
+<header class="hero">
+
+```
+<div class="breadcrumb">
+
+    <a href="index.html">
+        🏠 الرئيسية
+    </a>
+
+    <span> ></span>
+
+    <span id="termPath"></span>
+
+</div>
+
+<h1 id="pageTitle">
+    المواد الدراسية
+</h1>
+
+<p>
+    اختر المادة
+</p>
+```
+
+</header>
+
+<div
+    class="books"
+    id="subjectsContainer">
+
+</div>
+
+<script>
+
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const term =
+    params.get("term");
+
+const grade =
+    params.get("grade");
+
+document.getElementById(
+    "pageTitle"
+).innerHTML =
+    `${term} - ${grade}`;
+
+document.getElementById(
+    "termPath"
+).innerHTML =
+    `${term} > ${grade}`;
+
+const subjects = [
+
+{
+name:"القرآن الكريم",
+icon:"📖"
+},
+
+{
+name:"التربية الإسلامية",
+icon:"🕌"
+},
+
+{
+name:"اللغة العربية",
+icon:"📚"
+},
+
+{
+name:"الرياضيات",
+icon:"➗"
+},
+
+{
+name:"العلوم",
+icon:"🔬"
+},
+
+{
+name:"الاجتماعيات",
+icon:"🌍"
+},
+
+{
+name:"اللغة الإنجليزية",
+icon:"🇬🇧"
+},
+
+{
+name:"التربية الفنية",
+icon:"🎨"
+},
+
+{
+name:"المهارات الحياتية",
+icon:"💡"
+}
+
+];
+
+const container =
+    document.getElementById(
+        "subjectsContainer"
+    );
+
+subjects.forEach(
+    subject => {
+
+        container.innerHTML += `
+
+        <a
+            class="card"
+            href="resources.html?term=${term}&grade=${grade}&subject=${subject.name}">
+
+            <div style="
+                font-size:70px;
+                text-align:center;
+                padding-top:25px;
+            ">
+
+                ${subject.icon}
+
+            </div>
+
+            <h2>
+
+                ${subject.name}
+
+            </h2>
+
+        </a>
+
+        `;
+
+    }
+);
+
+document.getElementById(
+    "backBtn"
+).href =
+
+`grades.html?term=${term}`;
+
+</script>
+
+</body>
+
+</html>
