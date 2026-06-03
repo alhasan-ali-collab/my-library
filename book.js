@@ -1,5 +1,5 @@
 async function loadBook() {
-    const response = await fetch("http://localhost:3000/books");
+    const response = await fetch("/books");
     const books = await response.json();
 
     const params = new URLSearchParams(window.location.search);

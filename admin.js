@@ -27,7 +27,7 @@ async function loadBooks() {
 
     const response =
         await fetch(
-            "http://localhost:3000/books"
+            "/books"
         );
 
     const books =
@@ -76,7 +76,7 @@ const filteredBooks =
                 <img
     src="${
         book.image
-        ? `http://localhost:3000${book.image}`
+        ? `${book.image}`
         : 'https://via.placeholder.com/300x180'
     }"
     style="
@@ -154,7 +154,7 @@ form.addEventListener(
 
         const uploadResponse =
             await fetch(
-                "http://localhost:3000/upload",
+                "/upload",
                 {
                     method: "POST",
                     body: uploadForm
@@ -209,7 +209,7 @@ file:
         if (editId !== null) {
 
     await fetch(
-        `http://localhost:3000/books/${editId}`,
+        `/books/${editId}`,
         {
             method: "PUT",
 
@@ -234,7 +234,7 @@ file:
 } else {
 
     await fetch(
-        "http://localhost:3000/books",
+        "/books",
         {
             method: "POST",
 
@@ -278,7 +278,7 @@ if (
     return;
 }
     await fetch(
-        `http://localhost:3000/books/${id}`,
+        `/books/${id}`,
         {
             method: "DELETE"
         }
@@ -292,7 +292,7 @@ async function editBook(id) {
 
     const response =
         await fetch(
-            "http://localhost:3000/books"
+            "/books"
         );
 
     const books =

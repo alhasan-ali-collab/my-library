@@ -6,7 +6,7 @@
 
       const response =
     await fetch(
-        "http://localhost:3000/books"
+        "/books"
     );
         // تحويل البيانات إلى JavaScript
         allBooks =
