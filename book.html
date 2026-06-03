@@ -1,49 +1,159 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل الكتاب</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
-```
-<meta charset="UTF-8">
+    <style>
+        /* 1. إزالة الشريط الأبيض تماماً وإجبار العناصر الفرعية داخل bookPage على الشفافية */
+        #bookPage, 
+        #bookPage > div, 
+        .book-header, 
+        .hero, 
+        .main-container {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0">
+        /* 2. هيكلة الحاوية العلوية الجديدة لتوزيع العناصر تلقائياً */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px 40px;
+            margin-top: 60px; /* ترك مساحة لزر العودة */
+            background: transparent !important;
+            width: 100%;
+        }
 
-<title>تفاصيل الكتاب</title>
+        /* 3. تنسيق عنوان الوحدة الرئيسي في المنتصف */
+        .main-unit-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin: 0;
+            order: 2; /* الترتيب الثاني ليكون بالمنتصف */
+        }
 
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
+        /* 4. مجموعة الأيقونات على اليمين */
+        .meta-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            order: 1; /* الترتيب الأول على اليمين */
+        }
 
-<link
-    rel="stylesheet"
-    href="style.css">
-```
+        /* 5. مجموعة الأيقونات على اليسار */
+        .meta-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            order: 3; /* الترتيب الثالث على اليسار */
+        }
 
+        /* 6. تنسيق كبسولات الأيقونات بشكل زجاجي ناعم فوق الخلفية الأصلية */
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 8px 18px;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 7. إخفاء العناوين والنصوص العشوائية المكررة الناتجة من السكريبت القديم لمنع التداخل */
+        #bookPage h1, 
+        #bookPage h2,
+        #bookPage .book-info-title,
+        #bookPage .old-meta {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        /* 8. الحفاظ على تنسيق أزرار التحميل وملء الشاشة في مكانها بالأسفل */
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        /* دعم التجاوب مع شاشات الهواتف المحمولة */
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+                padding: 10px;
+            }
+            .meta-right, .meta-left, .main-unit-title {
+                order: unset;
+                justify-content: center;
+                width: 100%;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-```
-<a
-    class="back-btn"
-    href="index.html">
+    <a class="back-btn" href="index.html">⬅ العودة للمكتبة</a>
+    
+    <div id="breadcrumb" class="breadcrumb"></div>
+    
+    <div class="header-container">
+        <div class="meta-right" id="customMetaRight">
+            <div class="meta-item">📚 اللغة العربية</div>
+            <div class="meta-item">🦅 الصف الأول</div>
+        </div>
 
-    ⬅ العودة للمكتبة
+        <h1 class="main-unit-title" id="customUnitTitle">التهيئة والاستعداد</h1>
 
-</a>
-<div
-    id="breadcrumb"
-    class="breadcrumb">
-</div>
+        <div class="meta-left" id="customMetaLeft">
+            <div class="meta-item">🔰 الفصل الأول</div>
+            <div class="meta-item">📁 حل الكتاب</div>
+            <div class="meta-item">👁️ <span id="liveViews">23</span></div>
+        </div>
+    </div>
+    
+    <div id="bookPage"></div>
 
-<div id="bookPage"></div>
+    <script src="book.js"></script>
 
-<script src="book.js"></script>
-```
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const syncData = setInterval(() => {
+                // محاولة جلب العنوان المولد ديناميكياً من السكريبت الأساسي لتحديث الهيدر الجديد
+                const dynamicTitle = document.querySelector('#bookPage h1') || document.querySelector('#bookPage .title');
+                const dynamicViews = document.querySelector('#bookPage .views') || document.querySelector('#views');
+
+                if (dynamicTitle) {
+                    document.getElementById('customUnitTitle').innerText = dynamicTitle.innerText;
+                    if (dynamicViews) {
+                        const viewsNumbers = dynamicViews.innerText.replace(/[^0-9]/g, '');
+                        if(viewsNumbers) document.getElementById('liveViews').innerText = viewsNumbers;
+                    }
+                    clearInterval(syncData); // إيقاف المراقبة فور إتمام المزامنة بنجاح
+                }
+            }, 100);
+        });
+    </script>
 
 </body>
-
 </html>

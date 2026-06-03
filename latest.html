@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+آخر الوحدات
+</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<header class="hero">
+
+<h1>
+🆕 آخر الوحدات المضافة
+</h1>
+
+<p>
+أحدث الوحدات في المنصة
+</p>
+
+</header>
+
+<div
+id="latestBooks"
+class="books">
+
+</div>
+
+<script>
+
+async function loadLatest() {
+
+    const response =
+        await fetch(
+            "/books"
+        );
+
+    const books =
+        await response.json();
+
+    const latest =
+        [...books]
+        .reverse()
+        .slice(0, 10);
+
+    const container =
+        document.getElementById(
+            "latestBooks"
+        );
+
+    latest.forEach(
+        (book) => {
+
+            const id =
+                books.indexOf(book);
+
+            container.innerHTML += `
+
+            <a
+            class="card"
+            href="book.html?id=${id}">
+
+                <img
+                src="${book.image}"
+                alt="${book.title}"
+                style="
+                    width:100%;
+                    height:220px;
+                    object-fit:cover;
+                ">
+
+                <h3>
+                    ${book.title}
+                </h3>
+
+               <p>
+📖 ${book.subject}
+</p>
+
+<p>
+🎓 ${book.grade}
+</p>
+            </a>
+
+            `;
+
+        }
+    );
+
+}
+
+loadLatest();
+
+</script>
+
+</body>
+
+</html>

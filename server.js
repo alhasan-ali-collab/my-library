@@ -317,6 +317,51 @@ const PORT =
     process.env.PORT ||
     3000;
 
+    app.post("/books/:id/view", (req, res) => {
+
+    const id = Number(req.params.id);
+
+    fs.readFile(
+        "books.json",
+        "utf8",
+        (err, data) => {
+
+            if (err) {
+                return res.status(500).send("خطأ");
+            }
+
+            const books =
+                JSON.parse(data);
+
+            if (!books[id]) {
+                return res.status(404).send("غير موجود");
+            }
+
+            books[id].views =
+                (books[id].views || 0) + 1;
+
+            fs.writeFile(
+                "books.json",
+                JSON.stringify(
+                    books,
+                    null,
+                    2
+                ),
+                () => {
+
+                    res.json({
+                        views:
+                            books[id].views
+                    });
+
+                }
+            );
+
+        }
+    );
+
+});
+
 app.listen(
     PORT,
     () => {

@@ -1,82 +1,134 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-المنصة التعليمية
-</title>
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة التعليمية</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header class="hero">
+    <header class="hero">
+        <h1>📚 المنصة التعليمية</h1>
+        <p>اختر الفصل الدراسي</p>
+    </header>
 
-<h1>
-📚 المنصة التعليمية
-</h1>
+    <div style="max-width: 700px; margin: 10px auto; padding: 0 20px;">
+        <input id="homeSearch" type="text" placeholder="🔍 ابحث عن وحدة أو مادة..." class="search-box">
+        <div id="homeResults" class="books"></div>
+    </div>
 
-<p>
-اختر الفصل الدراسي
-</p>
+    <h2 class="section-title">📚 اختر الفصل الدراسي</h2>
 
-</header>
+    <main class="terms-container">
+        <a class="term-card" href="grades.html?term=الفصل الأول">
+            <div class="term-icon">📘</div>
+            <h2>الفصل الأول</h2>
+            <p>جميع الصفوف والمواد للفصل الأول</p>
+            <span class="explore-btn">استكشف الآن ←</span>
+        </a>
 
-<main class="terms-container">
+        <a class="term-card" href="grades.html?term=الفصل الثاني">
+            <div class="term-icon">📗</div>
+            <h2>الفصل الثاني</h2>
+            <p>جميع الصفوف والمواد للفصل الثاني</p>
+            <span class="explore-btn">استكشف الآن ←</span>
+        </a>
+    </main>
 
-<a
-class="term-card"
-href="grades.html?term=الفصل الأول">
+    <h2 class="section-title">🆕 آخر الوحدات المضافة</h2>
+    <div id="latestBooks" class="books"></div>
 
-<div class="term-icon">
-📘
-</div>
+    <h2 class="section-title">🔥 الأكثر مشاهدة</h2>
+    <div id="topBooks" class="books"></div>
 
-<h2>
-الفصل الأول
-</h2>
+    <script>
+        // تخزين البيانات هنا لمنع تكرار طلبها من الخادم
+        let allBooks = []; 
 
-<p>
-جميع الصفوف والمواد للفصل الأول
-</p>
+        // 1. جلب البيانات مرة واحدة فقط عند تحميل الصفحة
+        async function fetchBooks() {
+            try {
+                // وحدت الرابط ليتوافق مع الصفحات الأخرى
+                const response = await fetch("http://localhost:3000/books");
+                allBooks = await response.json();
+                
+                loadLatest();
+                loadTopBooks();
+            } catch (error) {
+                console.error("حدث خطأ أثناء جلب البيانات:", error);
+            }
+        }
 
-</a>
+        // 2. دالة موحدة لإنشاء كروت الكتب (لحذف التكرار العشوائي)
+        function createBookCard(book, id, badgeHtml = "") {
+            return `
+                <a class="card" href="book.html?id=${id}">
+                    <img src="${book.image}" alt="${book.title}">
+                    ${badgeHtml}
+                    <h3>${book.title}</h3>
+                    ${book.subject ? `<p>📖 ${book.subject}</p>` : ""}
+                    ${book.grade ? `<p>🎓 ${book.grade}</p>` : ""}
+                </a>
+            `;
+        }
 
-<a
-class="term-card"
-href="grades.html?term=الفصل الثاني">
+        // 3. عرض أحدث الكتب
+        function loadLatest() {
+            const latest = [...allBooks].reverse().slice(0, 6);
+            
+            const html = latest.map(book => {
+                const id = allBooks.indexOf(book);
+                // إضافة شارة "جديد" للكتب المضافة مؤخراً
+                return createBookCard(book, id, `<span class="new-badge">جديد</span>`);
+            }).join("");
+            
+            document.getElementById("latestBooks").innerHTML = html;
+        }
 
-<div class="term-icon">
-📗
-</div>
+        // 4. عرض الكتب الأكثر مشاهدة
+        function loadTopBooks() {
+            const topBooks = [...allBooks]
+                .sort((a, b) => (b.views || 0) - (a.views || 0))
+                .slice(0, 6);
+                
+            const html = topBooks.map(book => {
+                const id = allBooks.indexOf(book);
+                return createBookCard(book, id);
+            }).join("");
+            
+            document.getElementById("topBooks").innerHTML = html;
+        }
 
-<h2>
-الفصل الثاني
-</h2>
+        // 5. محرك البحث الداخلي
+        function searchHome() {
+            const value = document.getElementById("homeSearch").value.toLowerCase().trim();
+            const container = document.getElementById("homeResults");
 
-<p>
-جميع الصفوف والمواد للفصل الثاني
-</p>
+            if (value.length < 2) {
+                container.innerHTML = "";
+                return;
+            }
 
-</a>
+            const results = allBooks.filter(book =>
+                (book.title || "").toLowerCase().includes(value) ||
+                (book.subject || "").toLowerCase().includes(value)
+            ).slice(0, 6);
 
-</main>
+            container.innerHTML = results.map(book => {
+                const id = allBooks.indexOf(book);
+                return createBookCard(book, id);
+            }).join("");
+        }
+
+        // ربط شريط البحث بالحدث
+        document.getElementById("homeSearch").addEventListener("input", searchHome);
+
+        // تشغيل العملية فوراً
+        fetchBooks();
+    </script>
 
 </body>
-
 </html>

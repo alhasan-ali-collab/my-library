@@ -27,11 +27,88 @@ async function loadBooks() {
 
     const response =
         await fetch(
-            "http://localhost:3000/books"
-        );
-
+    `${window.location.origin}/books`
+);
     const books =
         await response.json();
+
+        const topBooks =
+    [...books]
+    .sort(
+        (a, b) =>
+            (b.views || 0) -
+            (a.views || 0)
+    )
+    .slice(0, 10);
+
+document.getElementById(
+    "viewsStats"
+).innerHTML =
+
+    topBooks.map(
+        book => `
+        <div class="card">
+            <h3>
+                ${book.title}
+            </h3>
+
+            <p>
+                👁️
+                ${book.views || 0}
+                مشاهدة
+            </p>
+        </div>
+        `
+    ).join("");
+
+        const subjects =
+    [...new Set(
+        books.map(
+            b => b.subject
+        )
+    )];
+
+const grades =
+    [...new Set(
+        books.map(
+            b => b.grade
+        )
+    )];
+
+const resources =
+    [...new Set(
+        books.map(
+            b => b.resource
+        )
+    )];
+
+document.getElementById(
+    "statsBox"
+).innerHTML = `
+
+<div class="stats">
+
+📚 الوحدات:
+${books.length}
+
+<br><br>
+
+📖 المواد:
+${subjects.length}
+
+<br><br>
+
+🎓 الصفوف:
+${grades.length}
+
+<br><br>
+
+📂 الأقسام:
+${resources.length}
+
+</div>
+
+`;
 
         const searchValue =
     document
@@ -151,6 +228,16 @@ form.addEventListener(
                 "file"
             ).files[0]
         );
+
+        uploadForm.append(
+    "grade",
+    document.getElementById("grade").value
+);
+
+uploadForm.append(
+    "subject",
+    document.getElementById("subject").value
+);
 
         const uploadResponse =
             await fetch(
