@@ -36,6 +36,7 @@
                 const subject = params.get("subject");
                 const resource = params.get("resource");
 
+<<<<<<< Updated upstream
                 document.getElementById("pageTitle").innerHTML = `${subject} - ${resource}`;
                 document.getElementById("path").innerHTML = `${term} > ${grade} > ${subject} > ${resource}`;
                 document.getElementById("backBtn").href = `resources.html?term=${term}&grade=${grade}&subject=${subject}`;
@@ -46,6 +47,23 @@
 
                 const response = await fetch(`${API_URL}/books`);
                 const books = await response.json();
+=======
+            <a
+                class="card"
+                href="book.html?id=${book.id}">
+
+                <img
+                    src="${book.image}"
+                    alt="${book.title}"
+                    style="
+                        width:100%;
+                        height:220px;
+                        object-fit:cover;
+                    ">
+                <h3>
+                    ${book.title}
+                </h3>
+>>>>>>> Stashed changes
 
                 const searchValue = document.getElementById("searchInput").value.toLowerCase();
 
@@ -91,10 +109,28 @@
             }
         }
 
+<<<<<<< Updated upstream
         document.getElementById("searchInput").addEventListener("input", loadUnits);
         
         loadUnits();
     </script>
+=======
+}
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        loadUnits
+    );
+
+loadUnits();
+
+</script>
+<script src="components.js"></script>
+>>>>>>> Stashed changes
 
 </body>
 </html>

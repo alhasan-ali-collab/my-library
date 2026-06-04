@@ -1,14 +1,8 @@
 let currentBook = null;
 
-if (
-    localStorage.getItem(
-        "admin"
-    ) !== "true"
-) {
-
-    location.href =
-        "login.html";
-
+const token = localStorage.getItem("token");
+if (!token) {
+    location.href = "login.html";
 }
 
 const form =
@@ -107,14 +101,14 @@ const filteredBooks =
                 <div class="admin-actions">
 
     <button
-        onclick="editBook(${books.indexOf(book)})">
+       onclick="editBook(${book.id})"
 
         ✏️ تعديل
 
     </button>
 
     <button
-        onclick="deleteBook(${books.indexOf(book)})">
+       onclick="deleteBook(${book.id})"
 
         🗑 حذف
 
@@ -157,6 +151,9 @@ form.addEventListener(
                 "/upload",
                 {
                     method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    },
                     body: uploadForm
                 }
             );
@@ -212,16 +209,11 @@ file:
         `/books/${editId}`,
         {
             method: "PUT",
-
             headers: {
-                "Content-Type":
-                    "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
-
-            body:
-                JSON.stringify(
-                    book
-                )
+            body: JSON.stringify(book)
         }
     );
 
@@ -237,19 +229,13 @@ file:
         "/books",
         {
             method: "POST",
-
             headers: {
-                "Content-Type":
-                    "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
-
-            body:
-                JSON.stringify(
-                    book
-                )
+            body: JSON.stringify(book)
         }
     );
-
     alert(
         "تم إضافة الوحدة"
     );
@@ -280,7 +266,10 @@ if (
     await fetch(
         `/books/${id}`,
         {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
         }
     );
 
@@ -299,8 +288,7 @@ async function editBook(id) {
         await response.json();
         
 
-    const book =
-        books[id];
+    const book = books.find(b => b.id === id);
 
         currentBook = book;
 
@@ -359,14 +347,8 @@ async function editBook(id) {
 loadBooks();
 
 function logout() {
-
-    localStorage.removeItem(
-        "admin"
-    );
-
-    location.href =
-        "login.html";
-
+    localStorage.removeItem("token");
+    location.href = "login.html";
 }
 
 const searchInput =

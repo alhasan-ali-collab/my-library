@@ -4,13 +4,18 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+  url      = "file:../library.db"
 }
 
 model Book {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
+  term        String
+  grade       String
+  subject     String
+  resource    String?
   title       String
-  category    String
   image       String
   file        String
   description String
+  views       Int     @default(0)
 }

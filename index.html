@@ -3,6 +3,7 @@
 <html lang="ar" dir="rtl">
 
 <head>
+<<<<<<< Updated upstream
 
 <meta charset="UTF-8">
 
@@ -21,6 +22,19 @@ rel="stylesheet">
 rel="stylesheet"
 href="style.css">
 
+=======
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنصة التعليمية</title>
+    <meta name="description" content="منصة الواجب التعليمية - المنصة الأولى لحلول المناهج السعودية، شروحات، اختبارات، وأوراق عمل لجميع الصفوف الدراسية.">
+    <meta name="keywords" content="حلول, الواجب, منصة الواجب, مناهج سعودية, اختبارات, شرح دروس, كتب مدرسية">
+    
+    <meta property="og:title" content="منصة الواجب التعليمية">
+    <meta property="og:description" content="المرجع التعليمي الأول لجميع الصفوف الدراسية. تصفح الحلول والشروحات الآن.">
+    <meta property="og:image" content="https://alwajeb.net/uploads/images/default-share.jpg"> <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+>>>>>>> Stashed changes
 </head>
 
 <body>
@@ -47,6 +61,7 @@ href="grades.html?term=الفصل الأول">
 📘
 </div>
 
+<<<<<<< Updated upstream
 <h2>
 الفصل الأول
 </h2>
@@ -76,7 +91,89 @@ href="grades.html?term=الفصل الثاني">
 </a>
 
 </main>
+=======
+    <script>
+    // تخزين البيانات هنا لمنع تكرار طلبها من الخادم
+    let allBooks = []; 
 
+    // 1. جلب البيانات من الخادم وقاعدة البيانات الجديدة
+    async function fetchBooks() {
+        try {
+            const response = await fetch("http://localhost:3000/books");
+            allBooks = await response.json();
+            
+            loadLatest();
+            loadTopBooks();
+        } catch (error) {
+            console.error("حدث خطأ أثناء جلب البيانات:", error);
+        }
+    }
+
+    // 2. دالة إنشـاء كروت الكتب المحدثة باستخدام المعرّف الحقيقي book.id
+    function createBookCard(book, badgeHtml = "") {
+        return `
+            <a class="card" href="book.html?id=${book.id}">
+                <img src="${book.image}" alt="${book.title}">
+                ${badgeHtml}
+                <h3>${book.title}</h3>
+                ${book.subject ? `<p>📖 ${book.subject}</p>` : ""}
+                ${book.grade ? `<p>🎓 ${book.grade}</p>` : ""}
+            </a>
+        `;
+    }
+
+    // 3. عرض أحدث الكتب (تم إزالة المعرّف القديم المتغير الثاني)
+    function loadLatest() {
+        const latest = [...allBooks].reverse().slice(0, 6);
+        
+        const html = latest.map(book => {
+            return createBookCard(book, `<span class="new-badge">جديد</span>`);
+        }).join("");
+        
+        document.getElementById("latestBooks").innerHTML = html;
+    }
+
+    // 4. عرض الكتب الأكثر مشاهدة (تم إزالة المعرّف القديم المتغير الثاني)
+    function loadTopBooks() {
+        const topBooks = [...allBooks]
+            .sort((a, b) => (b.views || 0) - (a.views || 0))
+            .slice(0, 6);
+            
+        const html = topBooks.map(book => {
+            return createBookCard(book);
+        }).join("");
+        
+        document.getElementById("topBooks").innerHTML = html;
+    }
+
+    // 5. محرك البحث الداخلي (تم إزالة المعرّف القديم المتغير الثاني)
+    function searchHome() {
+        const value = document.getElementById("homeSearch").value.toLowerCase().trim();
+        const container = document.getElementById("homeResults");
+
+        if (value.length < 2) {
+            container.innerHTML = "";
+            return;
+        }
+
+        const results = allBooks.filter(book =>
+            (book.title || "").toLowerCase().includes(value) ||
+            (book.subject || "").toLowerCase().includes(value)
+        ).slice(0, 6);
+
+        container.innerHTML = results.map(book => {
+            return createBookCard(book);
+        }).join("");
+    }
+
+    // ربط شريط البحث بالحدث
+    document.getElementById("homeSearch").addEventListener("input", searchHome);
+>>>>>>> Stashed changes
+
+    // تشغيل العملية فوراً
+    fetchBooks();
+</script>
+<script src="components.js"></script>
 </body>
 
 </html>
