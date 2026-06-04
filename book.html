@@ -8,28 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <style>
-        /* إزالة الخلفيات لدمج المحتوى بسلاسة */
-        #bookPage, 
-        #bookPage > div, 
-        .book-header, 
-        .hero, 
-        .main-container {
-            background: transparent !important;
-            background-color: transparent !important;
-            box-shadow: none !important;
-            border: none !important;
-        }
-
-        /* دعم التجاوب مع شاشات الهواتف المحمولة */
-        @media (max-width: 992px) {
-            .title-row {
-                flex-direction: column;
-                text-align: center;
-                gap: 15px;
-            }
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"></script>
 </head>
 <body>
 
@@ -38,6 +17,7 @@
     <div id="bookPage"></div>
 
     <script src="book.js"></script>
+    
     <script src="components.js"></script>
 
 </body>

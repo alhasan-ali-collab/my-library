@@ -2,8 +2,8 @@
 
 const headerHTML = `
 <nav class="navbar">
-    <a href="index.html" class="logo">
-        📚 منصة الواجب
+   <a href="index.html" class="logo">
+        <img src="logo.png" alt="شعار منصة الواجب" class="nav-logo">
     </a>
     <div class="nav-links">
         <a href="index.html">الرئيسية</a>

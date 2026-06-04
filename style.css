@@ -604,7 +604,16 @@ iframe {
     color: var(--primary);
     text-decoration: none;
 }
+.nav-logo {
+    height: 45px; /* يمكنك زيادة أو تقليل هذا الرقم حسب حجم شعارك */
+    width: auto;
+    display: block;
+    transition: 0.3s;
+}
 
+.nav-logo:hover {
+    transform: scale(1.05); /* حركة تكبير خفيفة وأنيقة عند مرور الماوس */
+}
 .nav-links {
     display: flex;
     gap: 20px;
@@ -686,4 +695,155 @@ iframe {
         gap: 15px;
         padding: 15px 20px;
     }
+}
+/* ==========================================================
+   تنسيقات مشغل الـ PDF المخصص
+   ========================================================== */
+#pdf-viewer-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.1);
+    border: 2px solid var(--primary);
+}
+
+.pdf-toolbar {
+    background: var(--primary); /* اللون البنفسجي */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    direction: rtl;
+}
+
+.toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pdf-toolbar button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Cairo';
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pdf-toolbar button:hover {
+    background: var(--accent);
+    color: var(--primary);
+}
+
+/* تنسيق عداد الصفحات مع أزرار الأسهم */
+.page-navigation {
+    font-family: 'Cairo';
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.page-navigation input {
+    width: 55px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 4px;
+    font-family: 'Cairo';
+    font-weight: bold;
+    font-size: 1rem;
+    background: white;
+    color: var(--primary);
+}
+
+/* أزرار الأسهم الخاصة بالتقليب داخل السكرول */
+.arrow-btn {
+    padding: 4px 8px !important;
+    font-size: 0.85rem !important;
+    margin-right: 3px;
+}
+
+.page-info {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.page-info input {
+    width: 60px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Cairo';
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--primary);
+}
+
+.canvas-wrapper {
+    width: 100%;
+    height: 75vh;
+    overflow-y: auto;
+    background: #e2e8f0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+/* حاوية الصفحة كإطار انتظار قبل الرسم */
+.page-container {
+    width: 100%;
+    max-width: 700px;
+    min-height: 900px; /* طول افتراضي تقريبي بانتظار الرسم */
+    background: #ffffff;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.page-canvas {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* كلمة جاري التحميل داخل الصفحة قبل ظهورها */
+.page-loading-text {
+    position: absolute;
+    font-family: 'Cairo';
+    color: #94a3b8;
+    font-weight: bold;
+}
+
+canvas {
+    max-width: 100%;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+/* تنسيقات عنوان الكتاب فوق المشغل */
+.book-title-header {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
 }
