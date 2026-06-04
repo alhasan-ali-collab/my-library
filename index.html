@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,62 +13,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<header class="hero">
+    <header class="hero">
+        <h1>📚 المنصة التعليمية</h1>
+        <p>اختر الفصل الدراسي</p>
+    </header>
 
-<h1>
-📚 المنصة التعليمية
-</h1>
+    <div style="max-width: 700px; margin: 10px auto; padding: 0 20px;">
+        <input id="homeSearch" type="text" placeholder="🔍 ابحث عن وحدة أو مادة..." class="search-box">
+        <div id="homeResults" class="books"></div>
+    </div>
 
-<p>
-اختر الفصل الدراسي
-</p>
+    <h2 class="section-title">📚 اختر الفصل الدراسي</h2>
 
-</header>
+    <main class="terms-container">
+        <a class="term-card" href="grades.html?term=الفصل الأول">
+            <div class="term-icon">📘</div>
+            <h2>الفصل الأول</h2>
+            <p>جميع الصفوف والمواد للفصل الأول</p>
+            <span class="explore-btn">استكشف الآن ←</span>
+        </a>
 
-<main class="terms-container">
+        <a class="term-card" href="grades.html?term=الفصل الثاني">
+            <div class="term-icon">📗</div>
+            <h2>الفصل الثاني</h2>
+            <p>جميع الصفوف والمواد للفصل الثاني</p>
+            <span class="explore-btn">استكشف الآن ←</span>
+        </a>
+    </main>
 
-<a
-class="term-card"
-href="grades.html?term=الفصل الأول">
+    <h2 class="section-title">🆕 آخر الوحدات المضافة</h2>
+    <div id="latestBooks" class="books"></div>
 
-<div class="term-icon">
-📘
-</div>
+    <h2 class="section-title">🔥 الأكثر مشاهدة</h2>
+    <div id="topBooks" class="books"></div>
 
-<<<<<<< Updated upstream
-<h2>
-الفصل الأول
-</h2>
-
-<p>
-جميع الصفوف والمواد للفصل الأول
-</p>
-
-</a>
-
-<a
-class="term-card"
-href="grades.html?term=الفصل الثاني">
-
-<div class="term-icon">
-📗
-</div>
-
-<h2>
-الفصل الثاني
-</h2>
-
-<p>
-جميع الصفوف والمواد للفصل الثاني
-</p>
-
-</a>
-
-</main>
-=======
     <script>
     // تخزين البيانات هنا لمنع تكرار طلبها من الخادم
     let allBooks = []; 
@@ -147,12 +125,10 @@ href="grades.html?term=الفصل الثاني">
 
     // ربط شريط البحث بالحدث
     document.getElementById("homeSearch").addEventListener("input", searchHome);
->>>>>>> Stashed changes
 
     // تشغيل العملية فوراً
     fetchBooks();
 </script>
 <script src="components.js"></script>
 </body>
-
 </html>

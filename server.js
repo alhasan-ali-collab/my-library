@@ -114,22 +114,5 @@ app.delete("/books/:id", authenticate, async (req, res) => {
 });
 
 // تشغيل الخادم
-<<<<<<< Updated upstream
-const PORT =
-    process.env.PORT ||
-    3000;
-
-app.listen(
-    PORT,
-    () => {
-
-        console.log(
-            `Server running on port ${PORT}`
-        );
-
-    }
-);
-=======
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running securely on port ${PORT}`));
->>>>>>> Stashed changes
