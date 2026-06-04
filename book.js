@@ -2,17 +2,6 @@ async function loadBook() {
     const response = await fetch("/books");
     const books = await response.json();
 
-<<<<<<< Updated upstream
-    const params = new URLSearchParams(window.location.search);
-    const id = Number(params.get("id"));
-
-    const book = books[id];
-
-    if (!book) {
-        document.getElementById("bookPage").innerHTML =
-            "<h2>الوحدة غير موجودة</h2>";
-        return;
-=======
         // جلب بيانات الكتب
         const response = await fetch("http://localhost:3000/books");
         const books = await response.json();
@@ -109,7 +98,6 @@ async function loadBook() {
     } catch (error) {
         console.error("حدث خطأ أثناء تحميل بيانات الكتاب:", error);
         document.getElementById("bookPage").innerHTML = "<h2>تعذر الاتصال بالخادم لجلب البيانات</h2>";
->>>>>>> Stashed changes
     }
 
     document.getElementById("bookPage").innerHTML = `
