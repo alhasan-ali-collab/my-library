@@ -49,6 +49,32 @@
     <h2 class="section-title">🔥 الأكثر مشاهدة</h2>
     <div id="topBooks" class="books"></div>
 
+    <div class="mini-calendar-section">
+    <div class="mini-today-card">
+        <span class="pill-label">اليوم ✨</span>
+        <h4 id="live-gregorian-date">جاري الحساب...</h4>
+        <p id="live-hijri-date">---</p>
+    </div>
+
+    <div class="mini-countdown-grid">
+        <div class="mini-event-card border-purple">
+            <div class="event-header-badge bg-purple">25 يونيو</div>
+            <div class="event-details">
+                <h5>بداية إجازة نهاية العام</h5>
+                <span class="days-remaining-pill" id="vacation-countdown">متبقي -- يوم</span>
+            </div>
+        </div>
+
+        <div class="mini-event-card border-gold">
+            <div class="event-header-badge bg-gold">23 أغسطس</div>
+            <div class="event-details">
+                <h5>بداية العام الدراسي الجديد</h5>
+                <span class="days-remaining-pill" id="new-year-countdown">متبقي -- يوم</span>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script>
     // تخزين البيانات هنا لمنع تكرار طلبها من الخادم
     let allBooks = []; 
@@ -130,5 +156,40 @@
     fetchBooks();
 </script>
 <script src="components.js"></script>
+<script>
+        function initAcademicCalendar() {
+            const today = new Date();
+            
+            // 1. تحديث التاريخ الميلادي
+            const gOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const gregorianStr = today.toLocaleDateString('ar-EG', gOptions);
+            if(document.getElementById('live-gregorian-date')) {
+                document.getElementById('live-gregorian-date').textContent = gregorianStr;
+            }
+
+            // 2. تحديث التاريخ الهجري
+            const hOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const hijriStr = today.toLocaleDateString('ar-SA-u-ca-islamic', hOptions);
+            if(document.getElementById('live-hijri-date')) {
+                document.getElementById('live-hijri-date').textContent = hijriStr;
+            }
+
+            // 3. حساب فارق الأيام التنازلي
+            function calculateDaysLeft(targetDateStr) {
+                const target = new Date(targetDateStr);
+                const difference = target.getTime() - today.getTime();
+                const days = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                return days > 0 ? `متبقي ${days} يوم` : `انتهت المناسبة 🎉`;
+            }
+
+            const vacationEl = document.getElementById('vacation-countdown');
+            const newYearEl = document.getElementById('new-year-countdown');
+
+            if (vacationEl) vacationEl.textContent = calculateDaysLeft('2026-06-25');
+            if (newYearEl) newYearEl.textContent = calculateDaysLeft('2026-08-23');
+        }
+
+        document.addEventListener('DOMContentLoaded', initAcademicCalendar);
+    </script>
 </body>
 </html>

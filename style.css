@@ -847,3 +847,206 @@ canvas {
     margin-bottom: 20px;
     font-size: 1.8rem;
 }
+.hidden { display: none !important; }
+
+/* ==========================================================
+   ✨ ترقية أزرار التبويبات التفاعلية (كتاب / ألعاب) ✨
+   ========================================================== */
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 25px auto;
+    max-width: 550px;
+    padding: 0 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px 24px;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: 2px solid #33004b; /* لون الهوية البنفسجي */
+    border-radius: 30px; /* زوايا دائرية ناعمة للأيقونات */
+    background-color: #ffffff;
+    color: #33004b;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 6px rgba(51, 0, 75, 0.05);
+}
+
+/* تأثير التمرير الفأري فوق الزر */
+.tab-btn:hover {
+    background-color: #f5f0f7;
+    transform: translateY(-2px);
+}
+
+/* حالة الزر النشط حالياً */
+.tab-btn.active {
+    background-color: #33004b;
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(51, 0, 75, 0.25);
+}
+
+/* ==========================================================
+   🎮 تنسيق قائمة كروت اختيار الألعاب (خمسة ألعاب ديناميكية) 🎮
+   ========================================================== */
+.games-menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    background: #f8fafc;
+    border-radius: 12px;
+}
+
+.game-menu-card {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* تأثير الكارت عند وقوف الطالب عليه لتشجيعه للضغط */
+.game-menu-card:hover {
+    transform: translateY(-6px);
+    border-color: #d4af37; /* حافة ذهبية فخمة للألعاب المتاحة */
+    box-shadow: 0 12px 24px rgba(51, 0, 75, 0.12);
+}
+
+/* زر العودة لقائمة الألعاب بداخل المستعرض */
+.back-to-menu-btn {
+    background: #d4af37 !important; /* ذهبي */
+    color: #33004b !important; /* بنفسجي */
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    cursor: pointer;
+}
+/* ==========================================================
+   📅 تنسيقات التقويم التعليمي المصغر والمستجيب 📅
+   ========================================================== */
+.mini-calendar-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+    font-family: 'Cairo', sans-serif;
+}
+
+/* بطاقة اليوم */
+.mini-today-card {
+    background: linear-gradient(135deg, #33004b, #4c0070);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(51, 0, 75, 0.15);
+}
+
+.mini-today-card .pill-label {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.mini-today-card h4 {
+    margin: 5px 0 0 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.mini-today-card p {
+    margin: 4px 0 0 0;
+    font-size: 0.85rem;
+    color: #dfcce6;
+}
+
+/* شبكة كروت العداد */
+.mini-countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+    flex: 3;
+    min-width: 280px;
+}
+
+.mini-event-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.mini-event-card:hover {
+    transform: translateY(-2px);
+}
+
+/* صمامات ألوان الحواف */
+.mini-event-card.border-purple { border: 2px solid #33004b; }
+.mini-event-card.border-gold { border: 2px solid #d4af37; }
+
+/* شارات التواريخ الصغير */
+.event-header-badge {
+    padding: 8px;
+    border-radius: 8px;
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-align: center;
+    min-width: 65px;
+    line-height: 1.2;
+}
+
+.event-header-badge.bg-purple { background: #33004b; }
+.event-header-badge.bg-gold { background: #d4af37; color: #33004b; }
+
+.event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.event-details h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #1e293b;
+    font-weight: 700;
+}
+
+.days-remaining-pill {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #64748b;
+}

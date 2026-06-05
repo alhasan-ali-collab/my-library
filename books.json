@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "term": "الفصل الأول",
     "grade": "الصف الأول",
     "subject": "اللغة العربية",
@@ -8,9 +9,11 @@
     "image": "/uploads/images/1780371773307.jpg",
     "file": "/uploads/pdfs/1780371773308.pdf",
     "description": "لغتي  ( التهيئة والاستعداد )",
-    "views": 93
+    "views": 93,
+    "games": []
   },
   {
+    "id": 2,
     "term": "الفصل الأول",
     "grade": "الصف الأول",
     "subject": "اللغة العربية",
@@ -18,9 +21,11 @@
     "title": "الوحدة الأولى اسرتي",
     "image": "/uploads/images/1780372021837.jpg",
     "file": "/uploads/pdfs/1780372021838.pdf",
-    "description": "لغتي  ( الوحدة الأولى اسرتي )"
+    "description": "لغتي  ( الوحدة الأولى اسرتي )",
+    "games": []
   },
   {
+    "id": 3,
     "term": "الفصل الأول",
     "grade": "الصف الأول",
     "subject": "اللغة العربية",
@@ -28,9 +33,11 @@
     "title": "الوحدة الثانية مدرستي",
     "image": "/uploads/images/1780372068244.jpg",
     "file": "/uploads/pdfs/1780372068245.pdf",
-    "description": "لغتي  ( الوحدة الثانية مدرستي )"
+    "description": "لغتي  ( الوحدة الثانية مدرستي )",
+    "games": []
   },
   {
+    "id": 4,
     "term": "الفصل الأول",
     "grade": "الصف الأول",
     "subject": "اللغة العربية",
@@ -38,9 +45,18 @@
     "title": "الوحدة الثالثة مدينتي",
     "image": "/uploads/images/1780372155882.jpg",
     "file": "/uploads/pdfs/1780372155883.pdf",
-    "description": "لغتي  ( الوحدة الثالثة مدينتي )"
+    "description": "لغتي  ( الوحدة الثالثة مدينتي )",
+    "games": [
+      {
+        "gameId": "g_ar_1_1_1",
+        "title": "🔬 مختبر تصنيف الأشكال الهندسية",
+        "path": "/uploads/games/shape-sorting/index.html",
+        "skill": "التمييز البصري للأشكال"
+      }
+    ]
   },
   {
+    "id": 5,
     "term": "الفصل الأول",
     "grade": "الصف الأول",
     "subject": "اللغة العربية",
@@ -48,6 +64,7 @@
     "title": "الخاتمة",
     "image": "/uploads/images/1780455527588.jpg",
     "file": "/uploads/pdfs/1780455527589.pdf",
-    "description": "        "
+    "description": "        ",
+    "games": []
   }
 ]

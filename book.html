@@ -3,21 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض الكتاب | منصة الواجب</title>
+    <title>عرض المحتوى التفاعلي | منصة الواجب</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"></script>
 </head>
 <body>
 
     <a class="back-btn" href="index.html">⬅ العودة للمكتبة</a>
     
-    <div id="bookPage"></div>
+    <h1 class="book-title-header" id="main-content-title">جاري تحميل العنوان...</h1>
 
+    <div class="tabs-container">
+        <button id="pdf-tab-btn" class="tab-btn active" onclick="switchView('pdf')">📖 تصفح الدرس</button>
+        <button id="game-tab-btn" class="tab-btn" onclick="switchView('game')">🎮 التحدي التفاعلي</button>
+    </div>
+
+    <div id="pdf-panel" class="view-panel">
+        <div id="pdf-viewer-container">
+            <div class="pdf-toolbar">
+                <div class="toolbar-group">
+                    <div class="page-navigation">
+                        <span>صفحة</span>
+                        <input type="number" id="page-num-input" value="1" min="1">
+                        <span>من <span id="page-count">--</span></span>
+                        
+                        <button id="prev-page-btn" title="الصفحة السابقة" class="arrow-btn">🔼</button>
+                        <button id="next-page-btn" title="الصفحة التالية" class="arrow-btn">🔽</button>
+                    </div>
+                </div>
+                
+                <div class="toolbar-group">
+                    <button id="zoom-in" title="تكبير">➕ تكبير</button>
+                    <button id="zoom-out" title="تصغير">➖ تصغير</button>
+                    <button id="fullscreen-btn" title="ملء الشاشة">🔲</button>
+                </div>
+            </div>
+            
+            <div class="canvas-wrapper" id="canvas-wrapper"></div>
+        </div>
+    </div>
+
+    <div id="game-panel" class="view-panel hidden">
+        <div id="pdf-viewer-container" style="overflow: hidden; background: #0f172a;">
+            
+            <div class="pdf-toolbar hidden" id="game-toolbar">
+                <div class="toolbar-group">
+                    <button onclick="exitGame()" class="back-to-menu-btn">🎮 العودة لقائمة الألعاب</button>
+                </div>
+                <div class="toolbar-group">
+                    <span id="active-game-title" style="font-weight: bold; font-family: 'Cairo';"></span>
+                </div>
+            </div>
+
+            <div id="games-menu-list" class="games-menu-grid"></div>
+
+            <div class="game-iframe-container hidden" id="game-frame-wrapper">
+                <iframe src="" id="game-frame" scrolling="no"></iframe>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"></script>
     <script src="book.js"></script>
-    
     <script src="components.js"></script>
 
 </body>
