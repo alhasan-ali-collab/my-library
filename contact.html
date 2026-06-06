@@ -4,194 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تواصل معنا | منصة الواجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        .contact-container {
-            max-width: 1000px;
-            margin: 40px auto 60px;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 40px;
-        }
-
-        /* كروت معلومات التواصل */
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .info-card {
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(91, 33, 182, 0.1);
-        }
-
-        .info-icon {
-            font-size: 35px;
-            background: rgba(91, 33, 182, 0.1);
-            width: 70px;
-            height: 70px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 50%;
-        }
-
-        .info-details h3 {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 5px;
-        }
-
-        .info-details p {
-            color: #64748b;
-            font-size: 0.95rem;
-        }
-
-        /* نموذج المراسلة */
-        .contact-form {
-            background: white;
-            padding: 40px;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
-        }
-
-        .contact-form h2 {
-            color: var(--primary);
-            margin-bottom: 25px;
-            font-size: 1.8rem;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group input, 
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-family: "Cairo";
-            font-size: 1rem;
-            transition: 0.3s;
-            background: #f8fafc;
-        }
-
-        .form-group input:focus, 
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--secondary);
-            background: white;
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 16px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 800;
-            font-family: "Cairo";
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 10px 20px rgba(91, 33, 182, 0.2);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(91, 33, 182, 0.3);
-        }
-
-        @media (max-width: 768px) {
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-            .contact-form {
-                padding: 25px;
+    <!-- استدعاء وتكوين محرك Tailwind CSS المعتمد للمنصة -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', purpleLight: '#4c0070', gold: '#d4af37', dark: '#1e1b4b' } }
+                }
             }
         }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12">
 
-    <header class="hero">
-        <h1>💬 تواصل معنا</h1>
-        <p>نحن هنا لمساعدتك والإجابة على جميع استفساراتك</p>
+    <!-- لوحة البانر الرئيسي للتواصل -->
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white rounded-3xl p-8 text-center shadow-xl">
+            <h1 class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">💬 تواصل معنا</h1>
+            <p class="text-purple-200 font-medium text-sm md:text-base">نحن هنا لمساعدتك والإجابة على جميع استفساراتك واقتراحاتك لتطوير المنصة</p>
+        </div>
     </header>
 
-    <div class="contact-container">
+    <!-- توزيع لوحة النماذج وبطاقات الدعم -->
+    <main class="max-w-6xl mx-auto px-4 mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <div class="contact-info">
-            <div class="info-card">
-                <div class="info-icon">📧</div>
-                <div class="info-details">
-                    <h3>البريد الإلكتروني</h3>
-                    <p>support@alwajeb.net</p>
+        <!-- قسم إرسال الرسالة الإلكترونية (ياخذ مساحة 2 كولوم) -->
+        <div class="md:col-span-2 bg-white border border-slate-100 p-6 md:p-8 rounded-2xl shadow-sm space-y-4">
+            <h2 class="text-lg font-black text-alwajeb-purple border-r-4 border-alwajeb-gold pr-2.5">أرسل لنا رسالة سريعاً</h2>
+            
+            <form id="contactForm" class="space-y-4 mt-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">الاسم الكريم</label>
+                    <input type="text" placeholder="اكتب اسمك هنا..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-sm outline-none focus:border-alwajeb-purple focus:bg-white transition-all">
                 </div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-icon">📱</div>
-                <div class="info-details">
-                    <h3>واتساب الدعم الفني</h3>
-                    <p>0500000000</p>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">البريد الإلكتروني</label>
+                    <input type="email" placeholder="name@example.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-sm outline-none focus:border-alwajeb-purple focus:bg-white transition-all dir-ltr text-right">
                 </div>
-            </div>
-
-            <div class="info-card">
-                <div class="info-icon">📍</div>
-                <div class="info-details">
-                    <h3>أوقات العمل</h3>
-                    <p>الأحد - الخميس (8 ص - 8 م)</p>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">نص الرسالة أو الاستفسار</label>
+                    <textarea rows="4" placeholder="اكتب ما يدور في ذهنك هنا يا بطل..." class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl font-semibold text-sm outline-none focus:border-alwajeb-purple focus:bg-white transition-all"></textarea>
                 </div>
-            </div>
-        </div>
-
-        <div class="contact-form">
-            <h2>أرسل لنا رسالة</h2>
-            <form onsubmit="event.preventDefault(); alert('تم إرسال رسالتك بنجاح! سنتواصل معك قريباً.'); this.reset();">
-                <div class="form-group">
-                    <input type="text" placeholder="الاسم الكريم" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" placeholder="البريد الإلكتروني" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" placeholder="موضوع الرسالة" required>
-                </div>
-                <div class="form-group">
-                    <textarea placeholder="اكتب رسالتك أو استفسارك هنا..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">إرسال الرسالة 🚀</button>
+                <button type="submit" class="w-full py-3.5 bg-alwajeb-purple hover:bg-alwajeb-purpleLight text-white font-black rounded-xl text-sm shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all">إرسال الرسالة إلى مختبر الدعم 🚀</button>
             </form>
         </div>
 
-    </div>
+        <!-- قسم بطاقات الاتصال الجانبية (ياخذ مساحة 1 كولوم) -->
+        <div class="space-y-4">
+            <!-- بطاقة البريد الإلكتروني الرسمية المعروضة بالصورة -->
+            <div class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="text-3xl bg-purple-50 p-3 rounded-xl">📩</div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400">البريد الإلكتروني</h4>
+                    <a href="mailto:support@alwajeb.net" class="text-sm font-black text-alwajeb-purple hover:underline">support@alwajeb.net</a>
+                </div>
+            </div>
 
+            <!-- بطاقة وقت الاستجابة المبهجة للأطفال والدعم -->
+            <div class="bg-white border border-slate-100 p-5 rounded-2xl shadow-sm flex items-center gap-4">
+                <div class="text-3xl bg-amber-50 p-3 rounded-xl">⚡</div>
+                <div>
+                    <h4 class="text-xs font-bold text-slate-400">سرعة الاستجابة</h4>
+                    <p class="text-sm font-black text-slate-700">خلال أقل من 24 ساعة عمل</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- سكريبت حقن الهيدر والفوتر القياسي النظيف -->
     <script src="components.js"></script>
-
 </body>
 </html>

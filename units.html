@@ -1,233 +1,126 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-الوحدات الدراسية
-</title>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="style.css">
-
-</head>
-
-<body>
-
-<a
- id="backBtn"
- class="back-btn">
-
-```
-⬅ العودة للأقسام
-```
-
-</a>
-
-<header class="hero">
-
-```
-<div class="breadcrumb">
-
-    <a href="index.html">
-        🏠 الرئيسية
-    </a>
-
-    <span> ></span>
-
-    <span id="path"></span>
-
-</div>
-
-<h1 id="pageTitle">
-    الوحدات الدراسية
-</h1>
-
-<p>
-    اختر الوحدة
-</p>
-```
-
-</header>
-
-<h2 id="unitsCount"></h2>
-
-<input
- id="searchInput"
- type="text"
- placeholder="🔍 ابحث عن وحدة..."
- class="search-box">
-
-<div
-    class="books"
-    id="unitsContainer">
-
-</div>
-
-<script>
-
-async function loadUnits() {
-
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
-
-    const term =
-        params.get("term");
-
-    const grade =
-        params.get("grade");
-
-    const subject =
-        params.get("subject");
-
-    const resource =
-        params.get("resource");
-
-    document.getElementById(
-        "pageTitle"
-    ).innerHTML =
-        `${subject} - ${resource}`;
-
-    document.getElementById(
-        "path"
-    ).innerHTML =
-        `${term} > ${grade} > ${subject} > ${resource}`;
-
-    document.getElementById(
-        "backBtn"
-    ).href =
-        `resources.html?term=${term}&grade=${grade}&subject=${subject}`;
-
-    const response =
-        await fetch(
-            "http://localhost:3000/books"
-        );
-
-    const books =
-        await response.json();
-
-    const searchValue =
-
-        document
-            .getElementById(
-                "searchInput"
-            )
-            .value
-            .toLowerCase();
-
-    const units =
-        books.filter(
-            book =>
-
-            book.term === term &&
-
-            book.grade === grade &&
-
-            book.subject === subject &&
-
-            book.resource === resource &&
-
-            book.title
-                .toLowerCase()
-                .includes(
-                    searchValue
-                )
-        );
-
-    document.getElementById(
-        "unitsCount"
-    ).innerHTML =
-        `📚 عدد الوحدات: ${units.length}`;
-
-    const container =
-        document.getElementById(
-            "unitsContainer"
-        );
-
-    container.innerHTML = "";
-
-    if (
-        units.length === 0
-    ) {
-
-        container.innerHTML =
-
-        `
-        <div style="
-            text-align:center;
-            padding:40px;
-            font-size:22px;
-        ">
-            لا توجد وحدات حالياً
-        </div>
-        `;
-
-        return;
-
-    }
-
-    units.forEach(
-        (book) => {
-
-            container.innerHTML += `
-
-            <a
-                class="card"
-                href="book.html?id=${book.id}">
-
-                <img
-                    src="${book.image}"
-                    alt="${book.title}"
-                    style="
-                        width:100%;
-                        height:220px;
-                        object-fit:cover;
-                    ">
-                <h3>
-                    ${book.title}
-                </h3>
-
-                <p>
-                    ${book.description}
-                </p>
-
-            </a>
-
-            `;
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدات الدراسية | منصة الواجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', gold: '#d4af37', dark: '#1e1b4b' } }
+                }
+            }
         }
-    );
+    </script>
+</head>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12">
 
+    <div class="max-w-6xl mx-auto px-4 mt-6 flex flex-wrap items-center justify-between gap-4">
+        <a id="backBtn" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full font-bold text-alwajeb-purple shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+            <span>⬅</span> العودة للأقسام
+        </a>
+        <div class="bg-white border border-slate-200 px-5 py-2 rounded-full font-bold text-sm text-slate-500 shadow-sm flex items-center gap-2">
+            <span>🏠 الرئيسية</span>
+            <span class="text-slate-300 font-normal">></span>
+            <span id="path" class="text-alwajeb-purple text-xs md:text-sm"></span>
+        </div>
+    </div>
+
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-purple-900 text-white rounded-3xl p-8 text-center shadow-xl relative pb-14">
+            <h1 id="pageTitle" class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">الوحدات الدراسية</h1>
+            <p class="text-purple-200 font-medium mb-4">تصفح الفصول والوحدات التعليمية المتاحة للتحميل والتصفح الفوري</p>
+            
+            <input id="searchInput" type="text" placeholder="🔍 ابحث عن اسم وحدة أو درس محدد بالاسم..." class="w-full max-w-xl mx-auto px-6 py-3.5 border-2 border-transparent rounded-full shadow-lg text-slate-800 font-semibold text-sm outline-none focus:border-alwajeb-gold transition-all absolute bottom-[-24px] left-1/2 transform -translate-x-1/2">
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 mt-12">
+        <div class="flex items-center justify-between mb-4 px-2">
+            <h2 id="unitsCount" class="text-sm font-black text-slate-500 bg-white border border-slate-200 rounded-full px-4 py-1.5 shadow-sm">📚 جاري الفحص...</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="unitsContainer"></div>
+    </main>
+
+    <script>
+   async function loadUnits() {
+    const params = new URLSearchParams(window.location.search);
+    const term = params.get("term");
+    const grade = params.get("grade");
+    const subject = params.get("subject");
+    const resource = params.get("resource");
+
+    document.getElementById("pageTitle").innerHTML = `🗂️ ${subject} - ${resource}`;
+    document.getElementById("path").innerHTML = `${term} <span class="text-slate-300">/</span> ${grade} <span class="text-slate-300">/</span> ${subject} <span class="text-slate-300">/</span> ${resource}`;
+    document.getElementById("backBtn").href = `resources.html?term=${term}&grade=${grade}&subject=${subject}`;
+
+    try {
+        const response = await fetch("http://localhost:3000/books");
+        const books = await response.json();
+        const searchValue = document.getElementById("searchInput").value.toLowerCase();
+
+        // 🧠 صمام الأمان الفائق: تنظيف وتجريد النصوص من الكلمات واللواحق الزائدة لضمان الفرز المحمي مئة بالمئة
+        const cleanText = (str) => {
+            return (str || "")
+                .replace("الدراسي", "")
+                .replace("الابتدائي", "")
+                .replace("المتوسط", "")
+                .replace(/\s+/g, " ") // دمج الفراغات المزدوجة إن وجدت
+                .trim();
+        };
+
+        const units = books.filter(book =>
+            cleanText(book.term) === cleanText(term) &&
+            cleanText(book.grade) === cleanText(grade) && // 🌟 تطهير ومطابقة الصفوف بمرونة هنا للأبد
+            (book.subject || "").trim() === (subject || "").trim() &&
+            (book.resource || "").trim() === (resource || "").trim() &&
+            (book.title || "").toLowerCase().includes(searchValue)
+        );
+
+        document.getElementById("unitsCount").innerHTML = `✨ عدد الوحدات المتاحة: ${units.length}`;
+        const container = document.getElementById("unitsContainer");
+        container.innerHTML = "";
+
+        if (units.length === 0) {
+            container.innerHTML = `
+                <div class="col-span-full bg-white border border-dashed border-slate-300 rounded-2xl text-center p-12 text-slate-400 font-bold text-lg">
+                    🔍 عذراً، لا توجد وحدات مطابقة للبحث حالياً!
+                </div>
+            `;
+            return;
+        }
+
+        units.forEach(book => {
+            container.innerHTML += `
+                <a class="group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-alwajeb-purple hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full" href="book.html?id=${book.id}">
+                    <div class="relative overflow-hidden aspect-video bg-slate-100 border-b border-slate-100">
+                        <img src="${book.image}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div class="mb-4">
+                            <h3 class="text-md font-black text-alwajeb-purple group-hover:text-purple-700 transition-colors mb-2">${book.title}</h3>
+                            <p class="text-xs text-slate-400 font-medium line-clamp-2 leading-relaxed">${book.description || 'تصفح الدرس التفاعلي والحلول النموذجية للوحدة الحالية.'}</p>
+                        </div>
+                        <span class="text-xs font-bold text-alwajeb-gold flex items-center gap-1">دخول للمحتوى التفاعلي ⬅</span>
+                    </div>
+                </a>
+            `;
+        });
+    } catch(e) {
+        console.error("Error loading units matrix:", e);
+    }
 }
 
-document
-    .getElementById(
-        "searchInput"
-    )
-    .addEventListener(
-        "input",
-        loadUnits
-    );
+        document.getElementById("searchInput").addEventListener("input", loadUnits);
+        loadUnits();
+    </script>
+    <script src="components.js"></script>
 
-loadUnits();
-
-</script>
-<script src="components.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 
 </body>
-
 </html>

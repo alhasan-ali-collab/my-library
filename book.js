@@ -1,18 +1,28 @@
+/**
+ * 📘 منصة الواجب التعليمية - سكريبت مشغل الكتب والألعاب التفاعلية المطور 📘
+ */
+
 const urlParams = new URLSearchParams(window.location.search);
 const bookId = urlParams.get('id');
-
 const pdfjsLib = window.pdfjsLib || window['pdfjs-dist/build/pdf'];
 
-let pdfDoc = null,
-    scale = 1.3,
-    currentUnitGames = []; // تخزين ألعاب الوحدة النشطة هنا
+// تهيئة المتغيرات العامة والأساسية للمشغل
+let pdfDoc = null;
+let scale = 1.3;
+let currentUnitGames = []; // تخزين ألعاب الوحدة النشطة
 
+// 🎯 استرجاع الصفحة الأخيرة التي وقف عندها الطالب لهذا الكتاب تحديداً (الافتراضي: 1)
+let savedPageNum = Number(localStorage.getItem(`alwajeb_progress_book_${bookId}`)) || 1;
+
+/**
+ * دالة جلب بيانات الكتاب وتهيئة ملف الـ PDF والتحضير الأولي
+ */
 async function initBook() {
     const titleElement = document.getElementById('main-content-title');
     const wrapper = document.getElementById('canvas-wrapper');
 
     if (!pdfjsLib) {
-        if (wrapper) wrapper.innerHTML = '<h2 style="text-align:center; padding: 50px; color: red;">عذراً، لم يتم تحميل مكتبة تشغيل الـ PDF.</h2>';
+        if (wrapper) wrapper.innerHTML = '<h2 style="text-align:center; padding: 50px; color: red; font-family:\'Cairo\';">عذراً، لم يتم تحميل مكتبة تشغيل الـ PDF.</h2>';
         return;
     }
 
@@ -24,18 +34,19 @@ async function initBook() {
     }
 
     try {
-        const response = await fetch("/books");
+        const response = await fetch("http://localhost:3000/books");
         const allBooks = await response.json();
         const book = allBooks.find(b => b.id == bookId);
 
         if (!book) {
             if (titleElement) titleElement.textContent = "الكتاب غير موجود!";
+            if (wrapper) wrapper.innerHTML = '<div class="text-center py-12 text-red-500 font-bold">⚠️ عذراً، لم يتم العثور على هذا الكتاب في قاعدة البيانات.</div>';
             return;
         }
 
         currentUnitGames = book.games || [];
 
-        // صمام أمان أمامي فوري: مصفوفة الألعاب الخمسة الكاملة للدرس لغرض الفهرسة والتجربة
+        // صمام أمان أمامي فوري للألعاب الخمسة
         if (bookId == 4 && currentUnitGames.length === 0) {
             currentUnitGames = [
                 {
@@ -77,80 +88,89 @@ async function initBook() {
 
         initToolbarEvents();
 
-        const loadingTask = pdfjsLib.getDocument(book.file);
-        pdfDoc = await loadingTask.promise;
+        const pdfUrl = book.url || book.pdf || book.file || book.path || book.src || `/uploads/pdfs/book-${bookId}.pdf`;
         
-        if (document.getElementById('page-count')) document.getElementById('page-count').textContent = pdfDoc.numPages;
-        if (document.getElementById('page-num-input')) document.getElementById('page-num-input').max = pdfDoc.numPages;
-        
-        createPagePlaceholders();
+        const loadingTask = pdfjsLib.getDocument({
+            url: pdfUrl,
+            cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/cmaps/',
+            cMapPacked: true
+        });
 
-    } catch (error) {
-        console.error("Error loading full interactive content:", error);
-    }
-}
-
-function initToolbarEvents() {
-    document.getElementById('zoom-in').addEventListener('click', () => { scale += 0.2; createPagePlaceholders(); });
-    document.getElementById('zoom-out').addEventListener('click', () => { if(scale <= 0.5) return; scale -= 0.2; createPagePlaceholders(); });
-    document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
-    
-    document.getElementById('next-page-btn').addEventListener('click', () => {
-        const input = document.getElementById('page-num-input');
-        const currentPage = parseInt(input.value);
-        if (currentPage < pdfDoc.numPages) scrollToPage(currentPage + 1);
-    });
-
-    document.getElementById('prev-page-btn').addEventListener('click', () => {
-        const input = document.getElementById('page-num-input');
-        const currentPage = parseInt(input.value);
-        if (currentPage > 1) scrollToPage(currentPage - 1);
-    });
-
-    document.getElementById('page-num-input').addEventListener('change', (e) => {
-        const pageNum = parseInt(e.target.value);
-        if (pageNum >= 1 && pageNum <= pdfDoc.numPages) scrollToPage(pageNum);
-    });
-}
-
-function scrollToPage(pageNum) {
-    const wrapper = document.getElementById('canvas-wrapper');
-    const targetPage = document.querySelector(`.page-container[data-page="${pageNum}"]`);
-    if (targetPage && wrapper) {
-        wrapper.scrollTo({ top: targetPage.offsetTop - 10, behavior: 'smooth' });
-    }
-}
-
-function createPagePlaceholders() {
-    const wrapper = document.getElementById('canvas-wrapper');
-    if (!wrapper) return;
-    wrapper.innerHTML = '';
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            const container = entry.target;
-            const pageNum = parseInt(container.dataset.page);
-
-            if (entry.isIntersecting && !container.classList.contains('rendered')) {
-                renderSinglePage(pageNum, container);
-            }
-            if (entry.isIntersecting) {
-                document.getElementById('page-num-input').value = pageNum;
+        loadingTask.promise.then((pdf) => {
+            pdfDoc = pdf;
+            const pageCountEl = document.getElementById('page-count');
+            if (pageCountEl) pageCountEl.textContent = pdf.numPages;
+            
+            // البدء الفوري في توليد ورسم جميع الصفحات مسبقاً
+            loadAndRenderAllPagesUpfront();
+        }).catch(err => {
+            console.error("خطأ أثناء تحميل ملف الـ PDF:", err);
+            if (wrapper) {
+                wrapper.innerHTML = `
+                    <div class="text-center py-12 px-6 bg-white rounded-xl border border-red-100 max-w-xl mx-auto my-8 shadow-sm">
+                        <div class="text-4xl mb-3">⚠️</div>
+                        <h3 class="text-red-600 font-black text-lg">فشل تحميل ملف الـ PDF الخاص بالدرس</h3>
+                        <div class="bg-slate-50 p-3 rounded-lg text-xs font-mono text-left text-slate-500 mt-4 overflow-x-auto">
+                            <strong>Tried Path:</strong> ${pdfUrl}<br>
+                            <strong>Error Details:</strong> ${err.message}
+                        </div>
+                    </div>
+                `;
             }
         });
-    }, { root: wrapper, rootMargin: '-100px 0px -50px 0px', threshold: 0.3 });
 
+    } catch (error) {
+        console.error("خطأ أثناء جلب مصفوفة الكتب من السيرفر:", error);
+    }
+}
+
+/**
+ * 🌟 المحرك الجديد: إنشاء ورسم جميع الصفحات فوراً وبشكل مسبق دون انتظار التمرير
+ */
+async function loadAndRenderAllPagesUpfront() {
+    const wrapper = document.getElementById('canvas-wrapper');
+    if (!wrapper || !pdfDoc) return;
+    wrapper.innerHTML = '';
+
+    // مراقب صامت خفيف جداً: وظيفته فقط تحديث العداد العلوي وحفظ التقدم بداخل الـ LocalStorage
+    const progressTrackerObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const visiblePageNum = parseInt(entry.target.dataset.page);
+                document.getElementById('page-num-input').value = visiblePageNum;
+                
+                // 💾 حفظ الصفحة الحالية في ذاكرة المتصفح فوراً باسم هذا الكتاب
+                localStorage.setItem(`alwajeb_progress_book_${bookId}`, visiblePageNum);
+            }
+        });
+    }, { root: wrapper, rootMargin: '-100px 0px -50px 0px', threshold: 0.4 });
+
+    // بناء الهياكل والرسم المتسلسل الفوري لجميع الصفحات مسبقاً لمنع ظهور جاري التحميل لاحقاً
     for (let i = 1; i <= pdfDoc.numPages; i++) {
         const pageContainer = document.createElement('div');
         pageContainer.className = 'page-container';
         pageContainer.dataset.page = i;
-        pageContainer.innerHTML = `<span class="page-loading-text">جاري تحميل صفحة ${i}... ⏳</span>`;
         wrapper.appendChild(pageContainer);
-        observer.observe(pageContainer);
+        
+        // تفعيل تتبع الصفحة الحالية
+        progressTrackerObserver.observe(pageContainer);
+
+        // رسم الصفحة فوراً وبشكل مسبق
+        await renderSinglePageUpfront(i, pageContainer);
+    }
+
+    // 🚀 القفزة الذكية: نقل الطالب تلقائياً إلى الصفحة التي كان واقفاً عندها قبل خروجه
+    if (savedPageNum > 1 && savedPageNum <= pdfDoc.numPages) {
+        setTimeout(() => {
+            scrollToPage(savedPageNum);
+        }, 400); // مهلة زمنية صغيرة جداً بالملي ثانية لضمان استقرار أبعاد حاوية المتصفح تماماً
     }
 }
 
-async function renderSinglePage(num, container) {
+/**
+ * دالة الرسم المباشر والمسبق للصفحة على الكانفاس
+ */
+async function renderSinglePageUpfront(num, container) {
     try {
         container.classList.add('rendered');
         const page = await pdfDoc.getPage(num);
@@ -167,7 +187,42 @@ async function renderSinglePage(num, container) {
         const renderCtx = { canvasContext: canvas.getContext('2d'), viewport: viewport };
         await page.render(renderCtx).promise;
     } catch (error) {
-        console.error(error);
+        console.error(`خطأ أثناء رسم الصفحة رقم ${num}:`, error);
+    }
+}
+
+/**
+ * ربط أحداث شريط الأدوات العلوي والتحكم بالصفحات والتكبير
+ */
+function initToolbarEvents() {
+    // عند تغيير حجم التكبير والتصغير يتم إعادة توليد الشبكة مسبقاً للحفاظ على بقائها جاهزة
+    document.getElementById('zoom-in').addEventListener('click', () => { scale += 0.2; loadAndRenderAllPagesUpfront(); });
+    document.getElementById('zoom-out').addEventListener('click', () => { if(scale <= 0.5) return; scale -= 0.2; loadAndRenderAllPagesUpfront(); });
+    document.getElementById('fullscreen-btn').addEventListener('click', toggleFullScreen);
+    
+    document.getElementById('next-page-btn').addEventListener('click', () => {
+        const input = document.getElementById('page-num-input');
+        const currentPage = parseInt(input.value);
+        if (pdfDoc && currentPage < pdfDoc.numPages) scrollToPage(currentPage + 1);
+    });
+
+    document.getElementById('prev-page-btn').addEventListener('click', () => {
+        const input = document.getElementById('page-num-input');
+        const currentPage = parseInt(input.value);
+        if (currentPage > 1) scrollToPage(currentPage - 1);
+    });
+
+    document.getElementById('page-num-input').addEventListener('change', (e) => {
+        const targetPage = parseInt(e.target.value);
+        if (pdfDoc && targetPage >= 1 && targetPage <= pdfDoc.numPages) scrollToPage(targetPage);
+    });
+}
+
+function scrollToPage(num) {
+    const wrapper = document.getElementById('canvas-wrapper');
+    const targetPage = document.querySelector(`.page-container[data-page="${num}"]`);
+    if (targetPage && wrapper) {
+        wrapper.scrollTo({ top: targetPage.offsetTop - 10, behavior: 'smooth' });
     }
 }
 
@@ -177,6 +232,9 @@ function toggleFullScreen() {
     else { document.exitFullscreen(); }
 }
 
+/**
+ * التبديل التفاعلي بين ألسنة العرض (كتاب / ألعاب)
+ */
 window.switchView = function(viewType) {
     const pdfPanel = document.getElementById('pdf-panel');
     const gamePanel = document.getElementById('game-panel');
@@ -186,40 +244,49 @@ window.switchView = function(viewType) {
     if (viewType === 'pdf') {
         pdfPanel.classList.remove('hidden');
         gamePanel.classList.add('hidden');
-        pdfTab.classList.add('active');
-        gameTab.classList.remove('active');
+        pdfTab.classList.add('active-tab-style');
+        gameTab.classList.remove('active-tab-style');
         exitGame();
     } else if (viewType === 'game') {
         pdfPanel.classList.add('hidden');
         gamePanel.classList.remove('hidden');
-        pdfTab.classList.remove('active');
-        gameTab.classList.add('active');
+        pdfTab.classList.remove('active-tab-style');
+        gameTab.classList.add('active-tab-style');
         buildGamesMenu();
     }
 }
 
+/**
+ * بناء وحقن قائمة كروت اختيار الألعاب بداخل لوحة تايلوند الفاخرة
+ */
 window.buildGamesMenu = function() {
     const menuContainer = document.getElementById('games-menu-list');
     if (!menuContainer) return;
     
     if (!currentUnitGames || currentUnitGames.length === 0) {
-        menuContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #94a3b8;"><h3 style="font-family: 'Cairo';">لم يتم إضافة ألعاب تفاعلية لهذه الوحدة حتى الآن.</h3></div>`;
+        menuContainer.innerHTML = `
+            <div class="col-span-full text-center py-12 text-slate-400 font-bold">
+                <h3 class="font-['Cairo']">لم يتم إضافة ألعاب تفاعلية لهذه الوحدة حتى الآن.</h3>
+            </div>
+        `;
         return;
     }
 
     menuContainer.innerHTML = currentUnitGames.map(game => `
-        <div class="game-menu-card" onclick="loadActiveGame('${game.path}', '${game.title}')">
-            <div style="font-size: 3rem; margin-bottom: 10px;">🕹️</div>
-            <div style="font-size: 1.15rem; margin-bottom: 8px; color: #33004b; font-family: 'Cairo'; font-weight: bold;">${game.title}</div>
-            <div style="font-size: 0.85rem; color: #33004b; background: rgba(51,0,75,0.06); padding: 4px 12px; border-radius: 20px; margin-bottom: 15px; font-family: 'Cairo'; font-weight: 600;">
+        <div class="group bg-white border border-slate-200 rounded-2xl p-6 text-center cursor-pointer shadow-sm hover:shadow-xl hover:border-purple-700 hover:-translate-y-1 transition-all duration-300 flex flex-col items-center justify-center" onclick="loadActiveGame('${game.path}', '${game.title}')">
+            <div class="text-4xl mb-3 group-hover:scale-110 transition-transform">🕹️</div>
+            <div class="text-md font-black text-[#33004b] mb-2">${game.title}</div>
+            <div class="text-xs text-purple-900 bg-purple-50 px-3 py-1 rounded-full font-bold mb-4">
                 🎯 المهارة: ${game.skill}
             </div>
-            <span style="font-size: 0.9rem; font-weight: bold; color: #d4af37; font-family: 'Cairo';">ابدأ التحدي الآن ⬅</span>
+            <span class="text-xs font-bold text-[#d4af37] group-hover:translate-x-[-4px] transition-transform">ابدأ التحدي الآن ⬅</span>
         </div>
     `).join('');
 }
 
-// 🌟 تعديل ذكي: دالة تشغيل الألعاب وحظر روابط التعارض المكسورة لـ # 🌟
+/**
+ * تشغيل اللعبة المختارة بداخل حاوية الـ IFrame الآمنة
+ */
 window.loadActiveGame = function(gamePath, gameTitle) {
     document.getElementById('games-menu-list').classList.add('hidden');
     document.getElementById('game-frame-wrapper').classList.remove('hidden');
@@ -228,25 +295,22 @@ window.loadActiveGame = function(gamePath, gameTitle) {
     
     const frame = document.getElementById('game-frame');
     
-    // إزالة أي إشعار "قريباً" قديم إن وُجد
     const oldNotice = document.getElementById('coming-soon-notice');
     if (oldNotice) oldNotice.remove();
 
     if (!gamePath || gamePath === "#" || gamePath.trim() === "") {
-        // 🚧 إذا كانت اللعبة قيد التطوير: نخفي الإطار ونعرض لوحة انتظار مبهجة ومحمية
         if (frame) frame.classList.add('hidden');
         
         const noticeDiv = document.createElement('div');
         noticeDiv.id = 'coming-soon-notice';
-        noticeDiv.style.cssText = "display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:75vh; color:#94a3b8; font-family:'Cairo'; text-align:center; padding:20px; background:#0f172a; border-radius: 0 0 12px 12px;";
+        noticeDiv.className = "flex flex-col items-center justify-center w-full h-[70vh] text-slate-400 font-['Cairo'] text-center p-6 bg-slate-900 rounded-b-2xl";
         noticeDiv.innerHTML = `
-            <div style="font-size:4.5rem; margin-bottom:15px;">🚧</div>
-            <h2 style="color:#ffffff; margin:0; font-size:1.6rem;">هذا التحدي قيد التحضير والبرمجة حالياً!</h2>
-            <p style="color:#64748b; max-width:500px; margin-top:12px; font-size:1rem; line-height:1.6;">نعمل بكل طاقة لتجهيز هذه اللعبة التعليمية وضخها بداخل المنصة لرفع كفاءة أبطال منصة الواجب. ترقبوها قريباً جداً! 🚀</p>
+            <div class="text-6xl mb-4">🚧</div>
+            <h2 class="text-white font-black text-xl">هذا التحدي قيد التحضير والبرمجة حالياً!</h2>
+            <p class="text-slate-500 max-w-md mt-3 text-sm leading-relaxed font-semibold">نعمل بكل طاقة لتجهيز هذه اللعبة التعليمية وضخها بداخل المنصة لرفع كفاءة أبطال منصة الواجب. ترقبوها قريباً جداً! 🚀</p>
         `;
         document.getElementById('game-frame-wrapper').appendChild(noticeDiv);
     } else {
-        // 🕹️ إذا كانت اللعبة حقيقية وجاهزة: نظهر الإطار ونمرر رابط التشغيل بأمان
         if (frame) {
             frame.classList.remove('hidden');
             frame.setAttribute('allow', 'autoplay');
@@ -270,4 +334,5 @@ window.exitGame = function() {
     document.getElementById('games-menu-list').classList.remove('hidden');
 }
 
+// إطلاق التهيئة الكلية فور جاهزية الملفات
 initBook();

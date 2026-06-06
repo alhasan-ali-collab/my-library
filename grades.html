@@ -1,113 +1,88 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-الصفوف الدراسية
-</title>
-
-<a
-    class="back-btn"
-    href="index.html">
-
-    ⬅ العودة للرئيسية
-
-</a>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفوف الدراسية | منصة الواجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alwajeb: { purple: '#33004b', purpleLight: '#4c0070', gold: '#d4af37', dark: '#1e1b4b' }
+                    }
+                }
+            }
+        }
+    </script>
 </head>
+<body class="bg-slate-50 font-['Cairo'] min-h-screen text-alwajeb-dark pb-12">
 
-<body>
+    <div class="max-w-6xl mx-auto px-4 mt-6 flex flex-wrap items-center justify-between gap-4">
+        <a class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full font-bold text-alwajeb-purple shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all" href="index.html">
+            <span>⬅</span> العودة للرئيسية
+        </a>
+        <div class="bg-white border border-slate-200 px-5 py-2 rounded-full font-bold text-sm text-slate-500 shadow-sm flex items-center gap-2">
+            <span>🏠 الرئيسية</span>
+            <span class="text-slate-300 font-normal">></span>
+            <span id="breadcrumbTerm" class="text-alwajeb-purple"></span>
+        </div>
+    </div>
 
-<header class="hero">
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white rounded-3xl p-8 text-center shadow-xl shadow-purple-900/10 relative overflow-hidden">
+            <h1 id="termTitle" class="text-2xl md:text-4xl font-black text-alwajeb-gold mb-2 drop-shadow">الفصل الدراسي</h1>
+            <p class="text-purple-200 font-medium text-xs md:text-sm">بطل منصة الواجب الرائع، اختر صفك الدراسي المفضل لاستكشاف الكتب والحلول النموذجية</p>
+        </div>
+    </header>
 
-<h1 id="termTitle">
-الفصل الدراسي
-</h1>
+    <main class="max-w-6xl mx-auto px-4 mt-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="gradesContainer"></div>
+    </main>
 
-<p>
-اختر الصف الدراسي
-</p>
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const term = params.get("term") || "الفصل الدراسي الأول";
 
-</header>
+    // حقن نصوص الفصل الدراسي في الهيدر والمسارات
+    document.getElementById("termTitle").innerHTML = `🎯 ${term}`;
+    document.getElementById("breadcrumbTerm").innerHTML = term;
 
-<div
-class="books"
-id="gradesContainer">
+    // 🌟 المصفوفة المحدثة بالمسميات الرسمية للمنهج السعودي (ابتدائي + متوسط) 🌟
+    const grades = [
+        "الصف الأول", "الصف الثاني", "الصف الثالث",
+        "الصف الرابع", "الصف الخامس", "الصف السادس",
+        "الصف الأول", "الصف الثاني", "الصف الثالث"
+    ];
 
-</div>
+    const container = document.getElementById("gradesContainer");
 
-<script>
-
-const params =
-new URLSearchParams(
-window.location.search
-);
-
-const term =
-params.get("term");
-
-document.getElementById(
-"termTitle"
-).innerHTML = term;
-
-const grades = [
-
-"الصف الأول",
-"الصف الثاني",
-"الصف الثالث",
-"الصف الرابع",
-"الصف الخامس",
-"الصف السادس",
-"الصف السابع",
-"الصف الثامن",
-"الصف التاسع"
-
-];
-
-const container =
-document.getElementById(
-"gradesContainer"
-);
-
-grades.forEach(
-grade => {
-
-container.innerHTML += `
-
-<a
-class="card"
-href="subjects.html?term=${term}&grade=${grade}">
-
-<h2>
-🏫 ${grade}
-</h2>
-
-</a>
-
-`;
-
-}
-);
-
+    grades.forEach((grade, index) => {
+        const gradeNumber = index + 1; // حساب رقم الصف ميكانيكياً من 1 إلى 9
+        
+        // 🧠 محدد المرحلة الذكي: لتغيير اللاحقة ميكانيكياً حسب الرقم
+        const stageName = gradeNumber <= 6 ? "الابتدائي" : "المتوسط";
+        
+        container.innerHTML += `
+            <a class="group bg-white border-2 border-slate-100 rounded-2xl p-8 text-center shadow-sm hover:shadow-2xl hover:border-alwajeb-purple hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center justify-center min-h-[180px]" href="subjects.html?term=${term}&grade=${grade} ${stageName}">
+                
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white font-black text-2xl flex items-center justify-center shadow-md mb-4 group-hover:scale-110 group-hover:from-alwajeb-gold group-hover:to-amber-400 group-hover:text-alwajeb-purple transition-all duration-300">
+                    ${gradeNumber}
+                </div>
+                
+                <h2 class="text-lg font-black text-alwajeb-purple group-hover:text-alwajeb-purpleLight transition-colors">${grade} ${stageName}</h2>
+                
+                <span class="text-xs font-bold text-slate-400 mt-3 flex items-center gap-1 group-hover:text-alwajeb-gold transition-colors">
+                    استكشف المناهج الآن ←
+                </span>
+            </a>
+        `;
+    });
 </script>
-<script src="components.js"></script>
-
+    
+    <script src="components.js"></script>
 </body>
-
 </html>

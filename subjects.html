@@ -1,191 +1,78 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-المواد الدراسية
-</title>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواد الدراسية | منصة الواجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', gold: '#d4af37', dark: '#1e1b4b' } }
+                }
+            }
+        }
+    </script>
 </head>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12">
 
-<body>
-
-<a
- id="backBtn"
- class="back-btn">
-
-```
-⬅ العودة للصفوف
-```
-
-</a>
-
-<header class="hero">
-
-```
-<div class="breadcrumb">
-
-    <a href="index.html">
-        🏠 الرئيسية
-    </a>
-
-    <span> ></span>
-
-    <span id="termPath"></span>
-
-</div>
-
-<h1 id="pageTitle">
-    المواد الدراسية
-</h1>
-
-<p>
-    اختر المادة
-</p>
-```
-
-</header>
-
-<div
-    class="books"
-    id="subjectsContainer">
-
-</div>
-
-<script>
-
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const term =
-    params.get("term");
-
-const grade =
-    params.get("grade");
-
-document.getElementById(
-    "pageTitle"
-).innerHTML =
-    `${term} - ${grade}`;
-
-document.getElementById(
-    "termPath"
-).innerHTML =
-    `${term} > ${grade}`;
-
-const subjects = [
-
-{
-name:"القرآن الكريم",
-icon:"📖"
-},
-
-{
-name:"التربية الإسلامية",
-icon:"🕌"
-},
-
-{
-name:"اللغة العربية",
-icon:"📚"
-},
-
-{
-name:"الرياضيات",
-icon:"➗"
-},
-
-{
-name:"العلوم",
-icon:"🔬"
-},
-
-{
-name:"الاجتماعيات",
-icon:"🌍"
-},
-
-{
-name:"اللغة الإنجليزية",
-icon:"🇬🇧"
-},
-
-{
-name:"التربية الفنية",
-icon:"🎨"
-},
-
-{
-name:"المهارات الحياتية",
-icon:"💡"
-}
-
-];
-
-const container =
-    document.getElementById(
-        "subjectsContainer"
-    );
-
-subjects.forEach(
-    subject => {
-
-        container.innerHTML += `
-
-        <a
-            class="card"
-            href="resources.html?term=${term}&grade=${grade}&subject=${subject.name}">
-
-            <div style="
-                font-size:70px;
-                text-align:center;
-                padding-top:25px;
-            ">
-
-                ${subject.icon}
-
-            </div>
-
-            <h2>
-
-                ${subject.name}
-
-            </h2>
-
+    <div class="max-w-6xl mx-auto px-4 mt-6 flex flex-wrap items-center justify-between gap-4">
+        <a id="backBtn" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full font-bold text-alwajeb-purple shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+            <span>⬅</span> العودة للصفوف
         </a>
+        <div class="bg-white border border-slate-200 px-5 py-2 rounded-full font-bold text-sm text-slate-500 shadow-sm flex items-center gap-2">
+            <span>🏠 الرئيسية</span>
+            <span class="text-slate-300 font-normal">></span>
+            <span id="termPath" class="text-alwajeb-purple"></span>
+        </div>
+    </div>
 
-        `;
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-purple-900 text-white rounded-3xl p-8 text-center shadow-xl">
+            <h1 id="pageTitle" class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">المواد الدراسية</h1>
+            <p class="text-purple-200 font-medium">اختر المادة المطلوبة لاستعراض المحتويات والكتب والحلول والمسابقات</p>
+        </div>
+    </header>
 
-    }
-);
+    <main class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5" id="subjectsContainer"></div>
+    </main>
 
-document.getElementById(
-    "backBtn"
-).href =
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const term = params.get("term");
+        const grade = params.get("grade");
 
-`grades.html?term=${term}`;
+        document.getElementById("pageTitle").innerHTML = `📚 ${grade} - ${term}`;
+        document.getElementById("termPath").innerHTML = `${term} <span class="text-slate-300 font-normal">/</span> ${grade}`;
+        document.getElementById("backBtn").href = `grades.html?term=${term}`;
 
-</script>
-<script src="components.js"></script>
+        const subjects = [
+            { name: "القرآن الكريم", icon: "📖" }, { name: "التربية الإسلامية", icon: "🕌" },
+            { name: "اللغة العربية", icon: "📚" }, { name: "الرياضيات", icon: "➗" },
+            { name: "العلوم", icon: "🔬" }, { name: "الاجتماعيات", icon: "🌍" },
+            { name: "اللغة الإنجليزية", icon: "🇬🇧" }, { name: "التربية الفنية", icon: "🎨" },
+            { name: "المهارات الحياتية", icon: "💡" }
+        ];
 
+        const container = document.getElementById("subjectsContainer");
+
+        subjects.forEach(subject => {
+            container.innerHTML += `
+                <a class="group bg-white border border-slate-200/80 rounded-2xl p-5 text-center shadow-sm hover:shadow-lg hover:border-alwajeb-purple hover:-translate-y-1 transition-all duration-200 flex flex-col items-center justify-center" href="resources.html?term=${term}&grade=${grade}&subject=${subject.name}">
+                    <div class="text-4xl p-4 bg-purple-50 rounded-full mb-3 group-hover:bg-alwajeb-gold group-hover:scale-110 transition-all duration-300">
+                        ${subject.icon}
+                    </div>
+                    <h2 class="text-md font-extrabold text-alwajeb-purple group-hover:text-alwajeb-purple-light transition-colors">${subject.name}</h2>
+                </a>
+            `;
+        });
+    </script>
+    <script src="components.js"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
 </body>
-
 </html>

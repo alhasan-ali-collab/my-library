@@ -3,83 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنصة التعليمية</title>
+    <title>منصة الواجب التعليمية | المناهج السعودية</title>
     <meta name="description" content="منصة الواجب التعليمية - المنصة الأولى لحلول المناهج السعودية، شروحات، اختبارات، وأوراق عمل لجميع الصفوف الدراسية.">
     <meta name="keywords" content="حلول, الواجب, منصة الواجب, مناهج سعودية, اختبارات, شرح دروس, كتب مدرسية">
     
     <meta property="og:title" content="منصة الواجب التعليمية">
     <meta property="og:description" content="المرجع التعليمي الأول لجميع الصفوف الدراسية. تصفح الحلول والشروحات الآن.">
-    <meta property="og:image" content="https://alwajeb.net/uploads/images/default-share.jpg"> <meta property="og:type" content="website">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta property="og:image" content="https://alwajeb.net/uploads/images/default-share.jpg"> 
+    <meta property="og:type" content="website">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alwajeb: {
+                            purple: '#33004b',
+                            purpleLight: '#4c0070',
+                            gold: '#d4af37',
+                            dark: '#1e1b4b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-bg {
+            background: linear-gradient(-45deg, #f5f3ff, #ede9fe, #ddd6fe, #f5f3ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+    </style>
 </head>
-<body>
+<body class="animated-bg font-['Cairo'] text-alwajeb-dark pb-12 min-h-screen">
 
-    <header class="hero">
-        <h1>📚 المنصة التعليمية</h1>
-        <p>اختر الفصل الدراسي</p>
-    </header>
+    <section class="w-full bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white rounded-b-[35px] pt-12 pb-16 px-4 text-center relative shadow-xl shadow-purple-950/10">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl md:text-5xl font-black mb-3 drop-shadow-md">المنصة التعليمية التفاعلية</h1>
+            <p class="text-sm md:text-lg text-alwajeb-gold font-bold opacity-95">اختر الفصل الدراسي المطلوب لاستكشاف المواد والكتب والأنشطة التفاعلية</p>
+        </div>
+        
+        <div class="absolute bottom-[-26px] left-1/2 transform -translate-x-1/2 w-full max-w-xl px-4 z-10">
+            <input id="homeSearch" type="text" placeholder="🔎 ابحث عن مادة، وحدة، أو درس محدد بالاسم..." class="w-full px-6 py-4 border-2 border-slate-100 rounded-full shadow-xl text-slate-800 font-semibold text-sm outline-none focus:border-alwajeb-gold transition-all">
+        </div>
+    </section>
 
-    <div style="max-width: 700px; margin: 10px auto; padding: 0 20px;">
-        <input id="homeSearch" type="text" placeholder="🔍 ابحث عن وحدة أو مادة..." class="search-box">
-        <div id="homeResults" class="books"></div>
-    </div>
+    <section class="max-w-6xl mx-auto px-4 mt-12">
+        <div id="homeResults" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </section>
 
-    <h2 class="section-title">📚 اختر الفصل الدراسي</h2>
+    <main class="max-w-6xl mx-auto px-4 mt-12 w-full">
+        <h2 class="text-center text-xl md:text-2xl font-black text-alwajeb-purple mb-8 relative flex items-center justify-center gap-2">
+            <span>📚</span> اختر الفصل الدراسي
+        </h2>
 
-    <main class="terms-container">
-        <a class="term-card" href="grades.html?term=الفصل الأول">
-            <div class="term-icon">📘</div>
-            <h2>الفصل الأول</h2>
-            <p>جميع الصفوف والمواد للفصل الأول</p>
-            <span class="explore-btn">استكشف الآن ←</span>
-        </a>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <a class="group bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight p-6 rounded-2xl text-white shadow-md hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[160px]" href="grades.html?term=الفصل الدراسي الأول">
+                <div>
+                    <div class="text-4xl mb-2 group-hover:scale-110 transition-transform origin-right">📘</div>
+                    <h2 class="text-xl font-black text-alwajeb-gold">الفصل الدراسي الأول</h2>
+                    <p class="text-xs text-purple-100 font-medium mt-1">جميع الصفوف والمواد والكتب المحلولة للفصل الأول</p>
+                </div>
+                <span class="text-xs font-bold text-white mt-4 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">استكشف الصفوف الآن ←</span>
+            </a>
 
-        <a class="term-card" href="grades.html?term=الفصل الثاني">
-            <div class="term-icon">📗</div>
-            <h2>الفصل الثاني</h2>
-            <p>جميع الصفوف والمواد للفصل الثاني</p>
-            <span class="explore-btn">استكشف الآن ←</span>
-        </a>
+            <a class="group bg-white border-2 border-slate-100 p-6 rounded-2xl shadow-md hover:shadow-2xl hover:border-emerald-500 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[160px]" href="grades.html?term=الفصل الدراسي الثاني">
+                <div>
+                    <div class="text-4xl mb-2 group-hover:scale-110 transition-transform origin-right">📗</div>
+                    <h2 class="text-xl font-black text-emerald-600">الفصل الدراسي الثاني</h2>
+                    <p class="text-xs text-slate-400 font-semibold mt-1">جميع الصفوف والمواد والكتب المحلولة للفصل الثاني</p>
+                </div>
+                <span class="text-xs font-bold text-alwajeb-purple mt-4 flex items-center gap-1 group-hover:translate-x-[-4px] transition-transform">استكشف الصفوف الآن ←</span>
+            </a>
+        </div>
     </main>
 
-    <h2 class="section-title">🆕 آخر الوحدات المضافة</h2>
-    <div id="latestBooks" class="books"></div>
+    <section class="max-w-6xl mx-auto px-4 mt-14">
+        <h2 class="text-right text-lg md:text-xl font-black text-alwajeb-purple mb-6 flex items-center gap-2 border-r-4 border-alwajeb-purple pr-3">
+            <span>🆕</span> آخر الوحدات والمناهج المضافة
+        </h2>
+        <div id="latestBooks" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </section>
 
-    <h2 class="section-title">🔥 الأكثر مشاهدة</h2>
-    <div id="topBooks" class="books"></div>
+    <section class="max-w-6xl mx-auto px-4 mt-14">
+        <h2 class="text-right text-lg md:text-xl font-black text-alwajeb-purple mb-6 flex items-center gap-2 border-r-4 border-alwajeb-gold pr-3">
+            <span>🔥</span> الأكثر تصفحاً ومشاهدة من الطلاب
+        </h2>
+        <div id="topBooks" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+    </section>
 
-    <div class="mini-calendar-section">
-    <div class="mini-today-card">
-        <span class="pill-label">اليوم ✨</span>
-        <h4 id="live-gregorian-date">جاري الحساب...</h4>
-        <p id="live-hijri-date">---</p>
-    </div>
+    <section class="max-w-6xl mx-auto px-4 w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-16">
+        <div class="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] text-white p-5 rounded-2xl relative shadow-md flex flex-col justify-center min-h-[110px]">
+            <span class="absolute top-3 left-4 text-[10px] bg-white/15 px-2 py-0.5 rounded-full font-bold">اليوم ✨</span>
+            <h4 id="live-gregorian-date" class="text-md font-black mt-2">جاري الحساب...</h4>
+            <p id="live-hijri-date" class="text-xs text-slate-300 font-bold mt-1">---</p>
+        </div>
+        
+        <div id="countdown-widgets-container" class="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="bg-white border-2 border-purple-100 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                <div class="bg-alwajeb-purple text-white font-black rounded-xl px-4 py-2 text-center text-xs min-w-[75px] leading-tight">25 يونيو</div>
+                <div class="flex-1">
+                    <h5 class="text-sm font-black text-slate-800">بداية إجازة نهاية العام الدراسي</h5>
+                    <span class="text-xs font-bold text-slate-400 block mt-1" id="vacation-countdown">متبقي -- يوم</span>
+                </div>
+            </div>
 
-    <div class="mini-countdown-grid">
-        <div class="mini-event-card border-purple">
-            <div class="event-header-badge bg-purple">25 يونيو</div>
-            <div class="event-details">
-                <h5>بداية إجازة نهاية العام</h5>
-                <span class="days-remaining-pill" id="vacation-countdown">متبقي -- يوم</span>
+            <div class="bg-white border-2 border-amber-100 rounded-2xl p-4 flex items-center gap-4 shadow-sm">
+                <div class="bg-alwajeb-gold text-alwajeb-purple font-black rounded-xl px-4 py-2 text-center text-xs min-w-[75px] leading-tight">23 أغسطس</div>
+                <div class="flex-1">
+                    <h5 class="text-sm font-black text-slate-800">بداية العام الدراسي الجديد 1448</h5>
+                    <span class="text-xs font-bold text-slate-400 block mt-1" id="new-year-countdown">متبقي -- يوم</span>
+                </div>
             </div>
         </div>
-
-        <div class="mini-event-card border-gold">
-            <div class="event-header-badge bg-gold">23 أغسطس</div>
-            <div class="event-details">
-                <h5>بداية العام الدراسي الجديد</h5>
-                <span class="days-remaining-pill" id="new-year-countdown">متبقي -- يوم</span>
-            </div>
-        </div>
-    </div>
-</div>
+    </section>
 
     <script>
-    // تخزين البيانات هنا لمنع تكرار طلبها من الخادم
     let allBooks = []; 
 
-    // 1. جلب البيانات من الخادم وقاعدة البيانات الجديدة
+    // 1. جلب البيانات من الخادم المحلي لشبكة المناهج
     async function fetchBooks() {
         try {
             const response = await fetch("http://localhost:3000/books");
@@ -88,39 +139,47 @@
             loadLatest();
             loadTopBooks();
         } catch (error) {
-            console.error("حدث خطأ أثناء جلب البيانات:", error);
+            console.error("حدث خطأ أثناء جلب البيانات من السيرفر:", error);
         }
     }
 
-    // 2. دالة إنشـاء كروت الكتب المحدثة باستخدام المعرّف الحقيقي book.id
+    // 2. المحرك المطور لبناء كروت تصفح نيونية متجاوبة مئة بالمئة مع تايلوند
     function createBookCard(book, badgeHtml = "") {
         return `
-            <a class="card" href="book.html?id=${book.id}">
-                <img src="${book.image}" alt="${book.title}">
-                ${badgeHtml}
-                <h3>${book.title}</h3>
-                ${book.subject ? `<p>📖 ${book.subject}</p>` : ""}
-                ${book.grade ? `<p>🎓 ${book.grade}</p>` : ""}
+            <a class="group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-alwajeb-purple hover:-translate-y-1.5 transition-all duration-300 flex flex-col h-full" href="book.html?id=${book.id}">
+                <div class="relative overflow-hidden aspect-video bg-slate-100 border-b border-slate-100">
+                    <img src="${book.image}" alt="${book.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    ${badgeHtml ? `<div class="absolute top-3 right-3 z-10">${badgeHtml}</div>` : ""}
+                </div>
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div class="mb-4">
+                        <h3 class="text-md font-black text-alwajeb-purple group-hover:text-purple-700 transition-colors mb-1.5 line-clamp-1">${book.title}</h3>
+                        <div class="flex flex-col gap-1">
+                            ${book.subject ? `<p class="text-xs text-slate-500 font-bold flex items-center gap-1">📖 مادة ${book.subject}</p>` : ""}
+                            ${book.grade ? `<p class="text-[11px] text-slate-400 font-bold">🎓 ${book.grade}</p>` : ""}
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-alwajeb-gold flex items-center gap-1 mt-auto">استكشف المحتوى الآن ⬅</span>
+                </div>
             </a>
         `;
     }
 
-    // 3. عرض أحدث الكتب (تم إزالة المعرّف القديم المتغير الثاني)
+    // 3. تصفية وحقن آخر الوحدات المضافة حديثاً
     function loadLatest() {
-        const latest = [...allBooks].reverse().slice(0, 6);
-        
+        const latest = [...allBooks].reverse().slice(0, 4);
         const html = latest.map(book => {
-            return createBookCard(book, `<span class="new-badge">جديد</span>`);
+            return createBookCard(book, `<span class="bg-emerald-500 text-white text-[10px] font-black px-2.5 py-1 rounded-full shadow-sm">جديد</span>`);
         }).join("");
         
         document.getElementById("latestBooks").innerHTML = html;
     }
 
-    // 4. عرض الكتب الأكثر مشاهدة (تم إزالة المعرّف القديم المتغير الثاني)
+    // 4. تصفية وحقن الكتب الأكثر مشاهدة بناءً على عداد الزيارات
     function loadTopBooks() {
         const topBooks = [...allBooks]
             .sort((a, b) => (b.views || 0) - (a.views || 0))
-            .slice(0, 6);
+            .slice(0, 4);
             
         const html = topBooks.map(book => {
             return createBookCard(book);
@@ -129,7 +188,7 @@
         document.getElementById("topBooks").innerHTML = html;
     }
 
-    // 5. محرك البحث الداخلي (تم إزالة المعرّف القديم المتغير الثاني)
+    // 5. محرك البحث التفاعلي الفوري للمكتبة الرئيسية
     function searchHome() {
         const value = document.getElementById("homeSearch").value.toLowerCase().trim();
         const container = document.getElementById("homeResults");
@@ -142,39 +201,32 @@
         const results = allBooks.filter(book =>
             (book.title || "").toLowerCase().includes(value) ||
             (book.subject || "").toLowerCase().includes(value)
-        ).slice(0, 6);
+        ).slice(0, 4);
 
         container.innerHTML = results.map(book => {
             return createBookCard(book);
         }).join("");
     }
 
-    // ربط شريط البحث بالحدث
     document.getElementById("homeSearch").addEventListener("input", searchHome);
-
-    // تشغيل العملية فوراً
     fetchBooks();
 </script>
-<script src="components.js"></script>
-<script>
+    <script>
         function initAcademicCalendar() {
             const today = new Date();
             
-            // 1. تحديث التاريخ الميلادي
             const gOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const gregorianStr = today.toLocaleDateString('ar-EG', gOptions);
             if(document.getElementById('live-gregorian-date')) {
                 document.getElementById('live-gregorian-date').textContent = gregorianStr;
             }
 
-            // 2. تحديث التاريخ الهجري
             const hOptions = { year: 'numeric', month: 'long', day: 'numeric' };
             const hijriStr = today.toLocaleDateString('ar-SA-u-ca-islamic', hOptions);
             if(document.getElementById('live-hijri-date')) {
                 document.getElementById('live-hijri-date').textContent = hijriStr;
             }
 
-            // 3. حساب فارق الأيام التنازلي
             function calculateDaysLeft(targetDateStr) {
                 const target = new Date(targetDateStr);
                 const difference = target.getTime() - today.getTime();
@@ -191,5 +243,10 @@
 
         document.addEventListener('DOMContentLoaded', initAcademicCalendar);
     </script>
+    
+    <script src="components.js"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
 </body>
 </html>

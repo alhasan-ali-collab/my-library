@@ -4,111 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>من نحن | منصة الواجب</title>
-    <meta name="description" content="منصة الواجب التعليمية - المنصة الأولى لحلول المناهج السعودية، شروحات، اختبارات، وأوراق عمل لجميع الصفوف الدراسية.">
-    <meta name="keywords" content="حلول, الواجب, منصة الواجب, مناهج سعودية, اختبارات, شرح دروس, كتب مدرسية">
-    
-    <meta property="og:title" content="منصة الواجب التعليمية">
-    <meta property="og:description" content="المرجع التعليمي الأول لجميع الصفوف الدراسية. تصفح الحلول والشروحات الآن.">
-    <meta property="og:image" content="https://alwajeb.net/uploads/images/default-share.jpg"> <meta property="og:type" content="website">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        .about-container {
-            max-width: 1000px;
-            margin: 40px auto 60px;
-            padding: 0 20px;
-            line-height: 1.8;
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', purpleLight: '#4c0070', gold: '#d4af37', dark: '#1e1b4b' } }
+                }
+            }
         }
-        
-        .about-intro {
-            text-align: center;
-            font-size: 1.15rem;
-            color: #4b5563;
-            background: rgba(255,255,255,0.8);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-            margin-bottom: 40px;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .about-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.05);
-            text-align: center;
-            border-bottom: 5px solid var(--accent);
-            transition: 0.3s;
-        }
-
-        .about-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(91, 33, 182, 0.1);
-        }
-
-        .about-card .icon {
-            font-size: 55px;
-            margin-bottom: 20px;
-        }
-
-        .about-card h3 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            font-weight: 800;
-        }
-        
-        .about-card p {
-            color: #64748b;
-            font-size: 1rem;
-        }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12">
 
-    <header class="hero">
-        <h1>📖 من نحن</h1>
-        <p>تعرف أكثر على منصة الواجب التعليمية</p>
+    <!-- البانر الرئيسي التعريفي -->
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white rounded-3xl p-8 text-center shadow-xl">
+            <h1 class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">✨ من نحن</h1>
+            <p class="text-purple-200 font-medium text-sm md:text-base">تعرّف على رؤية ورسالة ومستقبل منصة الواجب التعليمية الرقمية</p>
+        </div>
     </header>
 
-    <div class="about-container">
+    <!-- لوحة المحتوى والتعريف الاستراتيجي للمنصة -->
+    <main class="max-w-3xl mx-auto px-4 mt-8 bg-white border border-slate-100 p-6 md:p-8 rounded-2xl shadow-sm space-y-6">
         
-        <div class="about-intro">
-            <p>
-                نسعى في <strong>منصة الواجب</strong> إلى توفير بيئة تعليمية رقمية متكاملة، تدعم الطلاب والطالبات وتسهل عمل المعلمين. نقدم حلولاً دراسية، وشروحات مبسطة، واختبارات تفاعلية مبنية على أحدث المناهج المعتمدة بطريقة عصرية وسهلة الوصول.
+        <div class="space-y-2">
+            <h2 class="text-lg font-black text-alwajeb-purple border-r-4 border-alwajeb-gold pr-2.5">رؤيتنا ورسالتنا 🎯</h2>
+            <p class="text-sm md:text-md leading-relaxed text-slate-600 font-medium text-justify">
+                <strong>منصة الواجب التعليمية</strong> هي منصة رقمية رائدة متخصصة في تيسير وتبسيط المناهج الدراسية السعودية وتحويل حلول الكتب المدرسية والملخصات إلى تجارب رقمية ممتعة تناسب جيل المستقبل، مع التركيز على دمج حلول التحديات التفاعلية لتنمية مهارات التفكير المنطقي والاعتماد الذاتي لدى الطلاب.
             </p>
         </div>
 
-        <div class="about-grid">
-            <div class="about-card">
-                <div class="icon">🎯</div>
-                <h3>رؤيتنا</h3>
-                <p>أن نكون المرجع التعليمي الأول والأساسي لكل طالب، من خلال تقديم محتوى دقيق، منظم، وموثوق يسهل الوصول إليه في أي وقت ومن أي مكان.</p>
-            </div>
-
-            <div class="about-card">
-                <div class="icon">🚀</div>
-                <h3>مهمتنا</h3>
-                <p>تسهيل العملية التعليمية ورفع مستوى التحصيل الدراسي عبر دمج التقنية بالتعليم وتوفير أدوات ذكية وموارد مساعدة تخدم جميع المراحل.</p>
-            </div>
-
-            <div class="about-card">
-                <div class="icon">💎</div>
-                <h3>قيمنا</h3>
-                <p>التميز في جودة المحتوى، المصداقية في نقل المعلومة، والتطوير المستمر لمواكبة تطلعات الجيل الجديد في رحلة التعلم الذاتي.</p>
-            </div>
+        <div class="space-y-2">
+            <h2 class="text-lg font-black text-alwajeb-purple border-r-4 border-alwajeb-gold pr-2.5">التعليم باللعب (Gamification) 🎮🎓</h2>
+            <p class="text-sm md:text-md leading-relaxed text-slate-600 font-medium text-justify">
+                نحن نؤمن في منصة الواجب بأن التعليم لا ينبغي أن يكون جافاً؛ لذا نعمل على عزل وتطوير الأكواد البرمجية لبناء ألعاب تعليمية مدمجة وسريعة تلائم انتباه حواس طلاب الصفوف الأولية والمرحلة الابتدائية، وتضمن تثبيت المفاهيم العلمية والرياضية بداخل ذاكرتهم الطويلة بربط الحواس الفورية والبهجة البصرية.
+            </p>
         </div>
 
-    </div>
+    </main>
 
+    <!-- سكريبت حقن الهيدر والفوتر القياسي النظيف -->
     <script src="components.js"></script>
-
 </body>
 </html>

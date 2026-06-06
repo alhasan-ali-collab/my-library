@@ -1,196 +1,83 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-محتويات المادة
-</title>
-
-<link
-href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap"
-rel="stylesheet">
-
-<link
-rel="stylesheet"
-href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محتويات المادة | منصة الواجب</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', gold: '#d4af37', dark: '#1e1b4b' } }
+                }
+            }
+        }
+    </script>
 </head>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12">
 
-<body>
-
-<a
- id="backBtn"
- class="back-btn">
-
-```
-⬅ العودة للمواد
-```
-
-</a>
-
-<header class="hero">
-
-```
-<div class="breadcrumb">
-
-    <a href="index.html">
-        🏠 الرئيسية
-    </a>
-
-    <span> ></span>
-
-    <span id="path"></span>
-
-</div>
-
-<h1 id="pageTitle">
-    محتويات المادة
-</h1>
-
-<p>
-    اختر القسم المطلوب
-</p>
-```
-
-</header>
-
-<div
-    class="books"
-    id="resourcesContainer">
-
-</div>
-
-<script>
-
-const params =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const term =
-    params.get("term");
-
-const grade =
-    params.get("grade");
-
-const subject =
-    params.get("subject");
-
-document.getElementById(
-    "pageTitle"
-).innerHTML =
-    subject;
-
-document.getElementById(
-    "path"
-).innerHTML =
-    `${term} > ${grade} > ${subject}`;
-
-document.getElementById(
-    "backBtn"
-).href =
-    `subjects.html?term=${term}&grade=${grade}`;
-
-const resources = [
-
-{
-name:"كتاب الطالب",
-icon:"📕",
-desc:"الكتاب الدراسي الرسمي"
-},
-
-{
-name:"حل الكتاب",
-icon:"📗",
-desc:"حلول جميع التمارين"
-},
-
-{
-name:"شرح الدروس",
-icon:"📘",
-desc:"شروحات الوحدات والدروس"
-},
-
-{
-name:"الاختبارات",
-icon:"📝",
-desc:"اختبارات قصيرة ونهائية"
-},
-
-{
-name:"الأنشطة",
-icon:"🎯",
-desc:"أنشطة وتمارين إضافية"
-},
-
-{
-name:"دليل المعلم",
-icon:"👨‍🏫",
-desc:"أدلة وإرشادات المعلمين"
-},
-
-{
-name:"التوزيع",
-icon:"📅",
-desc:"الخطة والتوزيع الدراسي"
-}
-
-];
-
-const container =
-    document.getElementById(
-        "resourcesContainer"
-    );
-
-resources.forEach(
-    resource => {
-
-        container.innerHTML += `
-
-        <a
-            class="card"
-            href="units.html?term=${term}&grade=${grade}&subject=${subject}&resource=${resource.name}">
-
-            <div style="
-                font-size:80px;
-                text-align:center;
-                padding-top:25px;
-            ">
-
-                ${resource.icon}
-
-            </div>
-
-            <h2>
-
-                ${resource.name}
-
-            </h2>
-
-            <p>
-
-                ${resource.desc}
-
-            </p>
-
+    <div class="max-w-6xl mx-auto px-4 mt-6 flex flex-wrap items-center justify-between gap-4">
+        <a id="backBtn" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full font-bold text-alwajeb-purple shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+            <span>⬅</span> العودة للمواد
         </a>
+        <div class="bg-white border border-slate-200 px-5 py-2 rounded-full font-bold text-sm text-slate-500 shadow-sm flex items-center gap-2">
+            <span>🏠 الرئيسية</span>
+            <span class="text-slate-300 font-normal">></span>
+            <span id="path" class="text-alwajeb-purple text-xs md:text-sm"></span>
+        </div>
+    </div>
 
-        `;
+    <header class="max-w-6xl mx-auto px-4 mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-purple-900 text-white rounded-3xl p-8 text-center shadow-xl">
+            <h1 id="pageTitle" class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">محتويات المادة</h1>
+            <p class="text-purple-200 font-medium">اختر المورد أو القسم المطلوب لبدء المذاكرة والتحدي التعليمي</p>
+        </div>
+    </header>
 
-    }
-);
+    <main class="max-w-6xl mx-auto px-4 mt-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="resourcesContainer"></div>
+    </main>
 
-</script>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const term = params.get("term");
+        const grade = params.get("grade");
+        const subject = params.get("subject");
 
+        document.getElementById("pageTitle").innerHTML = `🎯 مادة ${subject}`;
+        document.getElementById("path").innerHTML = `${term} <span class="text-slate-300">/</span> ${grade} <span class="text-slate-300">/</span> ${subject}`;
+        document.getElementById("backBtn").href = `subjects.html?term=${term}&grade=${grade}`;
+
+        const resources = [
+            { name: "كتاب الطالب", icon: "📕", desc: "الكتاب الدراسي الرسمي الوزاري" },
+            { name: "حل الكتاب", icon: "📗", desc: "حلول وشروحات تمارين الكتاب كاملة" },
+            { name: "شرح الدروس", icon: "📘", desc: "فيديوهات وشروحات ملخصة ومبسطة" },
+            { name: "الاختبارات", icon: "📝", desc: "بنك أسئلة واختبارات قياس الاتقان" },
+            { name: "الأنشطة", icon: "🎯", desc: "أنشطة وتمارين داعمة وتفاعلية" },
+            { name: "دليل المعلم", icon: "👨‍🏫", desc: "أدلة وإرشادات توزيع المعلمين" },
+            { name: "التوزيع", icon: "📅", desc: "الخطة الزمنية والتوزيع المنهجي" }
+        ];
+
+        const container = document.getElementById("resourcesContainer");
+
+        resources.forEach(resource => {
+            container.innerHTML += `
+                <a class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-alwajeb-purple hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between min-h-[200px]" href="units.html?term=${term}&grade=${grade}&subject=${subject}&resource=${resource.name}">
+                    <div>
+                        <div class="text-4xl mb-4 group-hover:scale-110 transition-transform origin-right">${resource.icon}</div>
+                        <h2 class="text-lg font-black text-alwajeb-purple mb-1 group-hover:text-purple-700 transition-colors">${resource.name}</h2>
+                        <p class="text-xs text-slate-400 font-semibold leading-relaxed">${resource.desc}</p>
+                    </div>
+                    <div class="text-xs font-bold text-alwajeb-gold pt-4 group-hover:translate-x-[-4px] transition-transform">استكشف الملفات ←</div>
+                </a>
+            `;
+        });
+    </script>
+    <script src="components.js"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
 </body>
-<script src="components.js"></script>
-
 </html>

@@ -5,114 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سياسة الخصوصية | منصة الواجب</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-        .privacy-container {
-            max-width: 900px;
-            margin: 40px auto 60px;
-            padding: 40px;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 15px 40px rgba(15, 23, 42, 0.05);
-            line-height: 1.9;
-            color: #475569;
-        }
-
-        .privacy-container h2 {
-            color: var(--primary);
-            font-size: 1.6rem;
-            margin: 30px 0 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .privacy-container h2::before {
-            content: "■";
-            color: var(--accent);
-            font-size: 1.2rem;
-        }
-
-        .privacy-container p, .privacy-container ul {
-            font-size: 1.05rem;
-            margin-bottom: 20px;
-        }
-
-        .privacy-container ul {
-            padding-right: 20px;
-            list-style-type: disc;
-        }
-
-        .privacy-container li {
-            margin-bottom: 10px;
-        }
-
-        .last-updated {
-            text-align: center;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 12px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 30px;
-            border: 1px dashed #cbd5e1;
-        }
-
-        @media (max-width: 768px) {
-            .privacy-container {
-                padding: 25px;
-                margin: 20px;
+    <!-- الخطوط الخارجية المعتمدة للمنصة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء وتكوين محرك Tailwind CSS الموحد للموقع -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alwajeb: {
+                            purple: '#33004b',
+                            purpleLight: '#4c0070',
+                            gold: '#d4af37',
+                            dark: '#1e1b4b'
+                        }
+                    }
+                }
             }
         }
-    </style>
+    </script>
 </head>
-<body>
+<body class="bg-slate-50 font-['Cairo'] text-alwajeb-dark pb-12 min-h-screen flex flex-col justify-between">
 
-    <header class="hero">
-        <h1>🛡️ سياسة الخصوصية</h1>
-        <p>نحن نلتزم بحماية بياناتك وخصوصيتك</p>
+    <!-- 🚀 لوحة البانر العلوي الموحد (Hero Section) -->
+    <header class="max-w-6xl mx-auto px-4 w-full mt-6">
+        <div class="bg-gradient-to-br from-alwajeb-purple to-alwajeb-purpleLight text-white rounded-3xl p-8 text-center shadow-xl shadow-purple-950/10">
+            <h1 class="text-2xl md:text-3xl font-black text-alwajeb-gold mb-1">🛡️ سياسة الخصوصية</h1>
+            <p class="text-purple-200 font-medium text-sm md:text-base">نحن ملتزمون تماماً بحماية خصوصية بيانات أبطال وبطلات المنصة</p>
+        </div>
     </header>
 
-    <div class="privacy-container">
-        
-        <div class="last-updated">
-            📅 آخر تحديث: يونيو 2026
+    <!-- 📜 حاوية عرض بنود الخصوصية المطورة بتنسيق تايلوند ناعم -->
+    <main class="max-w-4xl mx-auto px-4 mt-8 w-full flex-1">
+        <div class="bg-white border border-slate-100 rounded-3xl p-6 md:p-10 shadow-sm space-y-8 leading-relaxed">
+            
+            <!-- تاريخ التحديث -->
+            <div class="text-center bg-slate-50 border border-dashed border-slate-200 rounded-2xl py-3.5 px-4 text-sm font-black text-alwajeb-purple">
+                📅 آخر تحديث ومراجعة للبنود: يونيو 2026 م
+            </div>
+
+            <p class="text-slate-600 font-medium text-sm md:text-base text-justify">
+                مرحباً بك في <strong>منصة الواجب التعليمية</strong> alwajeb.net. نحن نقدر ثقتك الغالية بنا ونحرص تماماً على توفير بيئة تعليمية رقمية آمنة ومحمية بالكامل. توضح هذه الصفحة الشفافة كيف نقوم بجمع واستخدام وحماية معلوماتك عند تصفحك للمنصة أو تشغيلك للألعاب التفاعلية.
+            </p>
+
+            <!-- البند الأول -->
+            <div class="space-y-3">
+                <h2 class="text-lg font-black text-alwajeb-purple flex items-center gap-2 border-r-4 border-alwajeb-gold pr-2.5">
+                    المعلومات التي نجمعها
+                </h2>
+                <p class="text-sm text-slate-500 font-semibold">نحن نجمع الحد الأدنى المطلق من البيانات الضرورية لتقديم تجربة تصفح سريعة وذكية للطفل، وتشتمل على:</p>
+                <ul class="list-disc pr-6 text-sm text-slate-600 font-medium space-y-2">
+                    <li><strong class="text-slate-800">بيانات الاستخدام:</strong> تتبع صامت للمواد والكتب التي تتصفحها لعرضها لك في قسم الأكثر مشاهدة وتسهيل الوصول إليها.</li>
+                    <li><strong class="text-slate-800">معلومات الجهاز:</strong> التعرف على نوع المتصفح وأبعاد الشاشة لضمان ملاءمة محرك الألعاب ومستعرض الـ PDF مع جهازك تلقائياً.</li>
+                    <li><strong class="text-slate-800">بيانات نماذج الدعم:</strong> عند استخدام صفحة تواصل معنا، نحتفظ بالاسم والبريد الإلكتروني مؤقتاً لغرض الرد على استفسارك ومساعدتك فقط.</li>
+                </ul>
+            </div>
+
+            <!-- البند الثاني -->
+            <div class="space-y-3">
+                <h2 class="text-lg font-black text-alwajeb-purple flex items-center gap-2 border-r-4 border-alwajeb-gold pr-2.5">
+                    كيف نستخدم معلوماتك؟
+                </h2>
+                <p class="text-sm text-slate-500 font-semibold">إن بياناتك في أمان صلب؛ ونحن في منصة الواجب لا نقوم ببيع أو مشاركة أو تسريب أي بيانات لأي جهات خارجية أو أطراف تسويقية بتاتاً. تنحصر استخداماتنا في:</p>
+                <ul class="list-disc pr-6 text-sm text-slate-600 font-medium space-y-2">
+                    <li>تطوير وضخ المزيد من المواد والوحدات التعليمية الأكثر طلباً من الطلاب.</li>
+                    <li>تقديم الدعم الفني السريع وحل مشاكل تشغيل الألعاب في المتصفحات.</li>
+                    <li>تأمين وحماية خوادم المنصة من أي هجمات أو استخدامات غير مصرح بها برمجياً.</li>
+                </ul>
+            </div>
+
+            <!-- البند الثالث -->
+            <div class="space-y-3">
+                <h2 class="text-lg font-black text-alwajeb-purple flex items-center gap-2 border-r-4 border-alwajeb-gold pr-2.5">
+                    ملفات تعريف الارتباط (Cookies) وحفظ التقدم
+                </h2>
+                <p class="text-sm text-slate-600 font-medium text-justify">
+                    تستخدم المنصة ملفات الارتباط التخزينية الخفيفة والمحلية (<span class="font-bold">localStorage</span>) لغرض واحد تفاعلي ومحبب للطفل: وهو تذكر النقطة والصفحة الدقيقة التي توقف عندها الطالب في آخر كتاب قراءه، مما يتيح له العودة وإكمال المذاكرة فوراً دون تشتت أو ضياع للوقت. يمكنك مسحها أو تعطيلها كلياً من إعدادات متصفحك في أي وقت تشاء.
+                </p>
+            </div>
+
+            <!-- البند الرابع -->
+            <div class="space-y-3">
+                <h2 class="text-lg font-black text-alwajeb-purple flex items-center gap-2 border-r-4 border-alwajeb-gold pr-2.5">
+                    أمن وحماية البيانات
+                </h2>
+                <p class="text-sm text-slate-600 font-medium text-justify">
+                    نحن نطبق بروتوكولات حماية وتشفير صارمة (<span class="font-bold">SSL/HTTPS</span>) لتأمين نقل البيانات بداخل خوادم موقعنا، وضمان عزل الشيفرات البرمجية للألعاب التعليمية لمنع أي وصول غير مصرح به أو تعديل على الملفات الأكاديمية للمنصة.
+                </p>
+            </div>
+
+            <!-- البند الخامس -->
+            <div class="space-y-3">
+                <h2 class="text-lg font-black text-alwajeb-purple flex items-center gap-2 border-r-4 border-alwajeb-gold pr-2.5">
+                    تواصل معنا
+                </h2>
+                <p class="text-sm text-slate-600 font-medium">
+                    إذا كان لديك أي تساؤل أو استفسار إضافي حول سياسة الخصوصية وأمان المنصة، يرجى عدم التردد في مراسلتنا فوراً عبر صفحة المساعدة المباشرة: <a href="contact.html" class="text-alwajeb-purple font-black underline hover:text-alwajeb-purpleLight transition-colors">اضغط هنا للانتقال لصفحة تواصل معنا</a>.
+                </p>
+            </div>
+
         </div>
+    </main>
 
-        <p>مرحباً بك في <strong>منصة الواجب</strong>. نحن نقدر ثقتك بنا ونحرص تماماً على حماية خصوصيتك وبياناتك الشخصية. توضح هذه الصفحة كيف نقوم بجمع، استخدام، وحماية المعلومات عند زيارتك للمنصة.</p>
-
-        <h2>المعلومات التي نجمعها</h2>
-        <p>نحن نجمع الحد الأدنى من المعلومات الضرورية لتقديم خدمة تعليمية مميزة، وتشمل:</p>
-        <ul>
-            <li><strong>بيانات الاستخدام:</strong> مثل الصفحات والوحدات التي تقوم بزيارتها لتحسين تجربتك وتوفير المحتوى الأنسب لك.</li>
-            <li><strong>معلومات الجهاز:</strong> نوع المتصفح والجهاز المستخدم لضمان توافق المنصة مع جميع الشاشات.</li>
-            <li><strong>بيانات التواصل:</strong> عند استخدامك لنموذج "تواصل معنا"، نحتفظ بالاسم والبريد الإلكتروني للرد على استفسارك فقط.</li>
-        </ul>
-
-        <h2>كيف نستخدم معلوماتك؟</h2>
-        <p>لا نقوم ببيع أو مشاركة بياناتك مع أي أطراف خارجية لأغراض تسويقية. نستخدم البيانات في:</p>
-        <ul>
-            <li>تحسين وتطوير محتوى المنصة (مثل معرفة أكثر الوحدات مشاهدة).</li>
-            <li>الرد على استفساراتك وتقديم الدعم الفني.</li>
-            <li>حماية المنصة من أي نشاط غير مصرح به.</li>
-        </ul>
-
-        <h2>ملفات تعريف الارتباط (Cookies)</h2>
-        <p>تستخدم المنصة ملفات تعريف الارتباط البسيطة لتحسين سرعة التصفح وحفظ تفضيلاتك (مثل آخر كتاب قمت بقرائته)، مما يوفر عليك الوقت في الزيارات القادمة. يمكنك تعطيلها من إعدادات متصفحك في أي وقت.</p>
-
-        <h2>حماية البيانات</h2>
-        <p>نحن نتخذ إجراءات أمنية وتقنية صارمة لحماية بياناتك من الوصول غير المصرح به أو التعديل أو الإفصاح، باستخدام تقنيات تشفير متقدمة وتأمين خوادمنا.</p>
-
-        <h2>تغييرات سياسة الخصوصية</h2>
-        <p>نحتفظ بالحق في تحديث سياسة الخصوصية هذه من وقت لآخر. سيتم نشر أي تغييرات على هذه الصفحة وتحديث تاريخ "آخر تحديث" بالأعلى.</p>
-
-        <h2>تواصل معنا</h2>
-        <p>إذا كان لديك أي أسئلة حول سياسة الخصوصية، يرجى التواصل معنا عبر صفحة <a href="contact.html" style="color: var(--primary); font-weight: bold; text-decoration: none;">تواصل معنا</a>.</p>
-
-    </div>
-
+    <!-- ⚙️ سكريبت حقن الهيدر والفوتر التفاعلي الموحد والمطوع لتايلوند -->
     <script src="components.js"></script>
 
 </body>

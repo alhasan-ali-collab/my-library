@@ -4,70 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عرض المحتوى التفاعلي | منصة الواجب</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { alwajeb: { purple: '#33004b', gold: '#d4af37', dark: '#0f172a' } }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
+<body class="bg-slate-100 font-['Cairo'] text-slate-800 pb-12">
 
-    <a class="back-btn" href="index.html">⬅ العودة للمكتبة</a>
-    
-    <h1 class="book-title-header" id="main-content-title">جاري تحميل العنوان...</h1>
-
-    <div class="tabs-container">
-        <button id="pdf-tab-btn" class="tab-btn active" onclick="switchView('pdf')">📖 تصفح الدرس</button>
-        <button id="game-tab-btn" class="tab-btn" onclick="switchView('game')">🎮 التحدي التفاعلي</button>
+    <div class="max-w-5xl mx-auto px-4 mt-6">
+        <a class="inline-flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-full font-bold text-alwajeb-purple shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all" href="index.html">
+            ⬅ العودة للمكتبة
+        </a>
     </div>
 
-    <div id="pdf-panel" class="view-panel">
-        <div id="pdf-viewer-container">
-            <div class="pdf-toolbar">
-                <div class="toolbar-group">
-                    <div class="page-navigation">
-                        <span>صفحة</span>
-                        <input type="number" id="page-num-input" value="1" min="1">
-                        <span>من <span id="page-count">--</span></span>
-                        
-                        <button id="prev-page-btn" title="الصفحة السابقة" class="arrow-btn">🔼</button>
-                        <button id="next-page-btn" title="الصفحة التالية" class="arrow-btn">🔽</button>
-                    </div>
+    <h1 class="text-center text-xl md:text-2xl font-black text-alwajeb-purple mt-6 px-4" id="main-content-title">جاري تحميل العنوان...</h1>
+
+    <div class="flex justify-center gap-4 max-w-md mx-auto mt-6 px-4">
+        <button id="pdf-tab-btn" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 font-extrabold text-sm border-2 border-alwajeb-purple rounded-full bg-white text-alwajeb-purple shadow-sm cursor-pointer transition-all active-tab-style" onclick="switchView('pdf')">📖 تصفح الدرس</button>
+        <button id="game-tab-btn" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 font-extrabold text-sm border-2 border-alwajeb-purple rounded-full bg-white text-alwajeb-purple shadow-sm cursor-pointer transition-all" onclick="switchView('game')">🎮 التحدي التفاعلي</button>
+    </div>
+
+    <!-- ✅ الوضع الجديد المصحح والمضمون -->
+<div id="pdf-panel" class="max-w-5xl mx-auto px-4 mt-6 view-panel">
+    <!-- 🌟 أضفنا المعرّف الذكي هنا ليعود زر التكبير للعمل فوراً 🌟 -->
+    <div id="pdf-viewer-container" class="bg-white border-2 border-alwajeb-purple rounded-2xl overflow-hidden shadow-xl">
+            <div class="bg-alwajeb-purple text-white flex flex-wrap justify-between items-center p-4 gap-4">
+                <div class="flex items-center gap-2 font-bold text-sm">
+                    <span>صفحة</span>
+                    <input type="number" id="page-num-input" value="1" min="1" class="w-14 text-center rounded bg-white text-alwajeb-purple font-black p-1 text-sm outline-none">
+                    <span>من <span id="page-count" class="text-alwajeb-gold">--</span></span>
+                    <button id="prev-page-btn" title="الصفحة السابقة" class="bg-white/10 hover:bg-alwajeb-gold hover:text-alwajeb-purple px-2 py-1 rounded transition-colors text-xs">🔼</button>
+                    <button id="next-page-btn" title="الصفحة التالية" class="bg-white/10 hover:bg-alwajeb-gold hover:text-alwajeb-purple px-2 py-1 rounded transition-colors text-xs">🔽</button>
                 </div>
-                
-                <div class="toolbar-group">
-                    <button id="zoom-in" title="تكبير">➕ تكبير</button>
-                    <button id="zoom-out" title="تصغير">➖ تصغير</button>
-                    <button id="fullscreen-btn" title="ملء الشاشة">🔲</button>
+                <div class="flex items-center gap-2 text-xs md:text-sm font-bold">
+                    <button id="zoom-in" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded">➕ تكبير</button>
+                    <button id="zoom-out" class="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded">➖ تصغير</button>
+                    <button id="fullscreen-btn" class="bg-white/10 hover:bg-alwajeb-gold hover:text-alwajeb-purple px-3 py-1.5 rounded">🔲 ملء الشاشة</button>
                 </div>
             </div>
-            
-            <div class="canvas-wrapper" id="canvas-wrapper"></div>
+            <div class="canvas-wrapper w-full h-[75vh] overflow-y-auto bg-slate-200 p-6 flex flex-col items-center gap-6" id="canvas-wrapper"></div>
         </div>
     </div>
 
-    <div id="game-panel" class="view-panel hidden">
-        <div id="pdf-viewer-container" style="overflow: hidden; background: #0f172a;">
+    <div id="game-panel" class="max-w-5xl mx-auto px-4 mt-6 view-panel hidden">
+        <div class="bg-alwajeb-dark rounded-2xl overflow-hidden shadow-2xl min-h-[70vh] p-6">
             
-            <div class="pdf-toolbar hidden" id="game-toolbar">
-                <div class="toolbar-group">
-                    <button onclick="exitGame()" class="back-to-menu-btn">🎮 العودة لقائمة الألعاب</button>
-                </div>
-                <div class="toolbar-group">
-                    <span id="active-game-title" style="font-weight: bold; font-family: 'Cairo';"></span>
-                </div>
+            <div class="hidden justify-between items-center bg-purple-950 border border-purple-900 rounded-xl p-4 mb-6 text-white gap-4" id="game-toolbar">
+                <button onclick="exitGame()" class="bg-alwajeb-gold text-purple-950 font-black px-4 py-2 rounded-lg text-sm hover:scale-105 transition-transform">🎮 العودة لقائمة الألعاب</button>
+                <span id="active-game-title" class="font-black text-alwajeb-gold tracking-wide"></span>
             </div>
 
-            <div id="games-menu-list" class="games-menu-grid"></div>
+            <div id="games-menu-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
 
-            <div class="game-iframe-container hidden" id="game-frame-wrapper">
-                <iframe src="" id="game-frame" scrolling="no"></iframe>
+            <div class="game-iframe-container hidden w-full h-[72vh] rounded-xl overflow-hidden bg-slate-900 border border-slate-800" id="game-frame-wrapper">
+                <iframe src="" id="game-frame" class="w-full h-full border-none" scrolling="no" allow="autoplay"></iframe>
             </div>
 
         </div>
     </div>
+
+    <style>
+        .active-tab-style { background-color: #33004b !important; color: #ffffff !important; box-shadow: 0 4px 14px rgba(51, 0, 75, 0.3) !important; }
+    </style>
 
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.10.377/build/pdf.min.js"></script>
     <script src="book.js"></script>
     <script src="components.js"></script>
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
 </body>
 </html>
